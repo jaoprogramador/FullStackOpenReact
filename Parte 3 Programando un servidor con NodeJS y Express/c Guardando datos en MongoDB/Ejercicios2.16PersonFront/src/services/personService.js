@@ -2,7 +2,7 @@ import axios from 'axios'
 //LOCAL
 //const baseUrl = 'http://localhost:3001/persons'
 //DESA
-const baseUrl = '/api/persons'
+const baseUrl = '/api/personsMG'
 const getAll = () => {
   const request = axios.get(baseUrl)
   return request.then(response => response.data)

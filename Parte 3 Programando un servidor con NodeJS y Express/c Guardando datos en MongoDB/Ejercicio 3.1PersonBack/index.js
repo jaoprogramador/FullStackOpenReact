@@ -26,7 +26,7 @@ mongoose.connect(url)
   })
   {/*ADD PERSON*/}
   {/*============*/}
-  app.post('/api/persons', (request, response) => {
+  app.post('/api/personsMG', (request, response) => {
     const body = request.body
   
     if (body.content === undefined) {
@@ -59,7 +59,7 @@ mongoose.connect(url)
 
   {/*DELETE PERSON*/}
   {/*============*/}
-  app.delete('/api/persons/:id', (request, response) => {
+  app.delete('/api/personsMG/:id', (request, response) => {
     const id = Number(request.params.id)
     persons = persons.filter(person => person.id !== id)
   
@@ -68,7 +68,7 @@ mongoose.connect(url)
 
   {/*GET PERSON*/}
   {/*============*/}
-  app.get('/api/persons/:id', (request, response) => {
+  app.get('/api/personsMG/:id', (request, response) => {
     Person.findById(request.params.id).then(person => {
       response.json(person)
     })
