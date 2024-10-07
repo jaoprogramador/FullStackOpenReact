@@ -1,0 +1,39 @@
+{
+  "name": "part1",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "//": "build : vite build",
+    "build:ui": "@powershell Remove-Item -Recurse -Force dist && cd ../Ejercicios2.13FRONT && npm run build && @powershell Copy-Item dist -Recurse ../Ejercicio 3.0BACK",
+    "deploy": "fly deploy",
+    "deploy:full": "npm run build:ui && npm run deploy",    
+    "logs:prod": "fly logs",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "server": "json-server -p3001 --watch src/db.json"
+  },
+  "dependencies": {
+    "@babel/core": "^7.25.7",
+    "@babel/preset-env": "^7.25.7",
+    "@babel/preset-react": "^7.25.7",
+    "axios": "^1.7.7",
+    "node-releases": "^2.0.18",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^9.9.0",
+    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.9",
+    "globals": "^15.9.0",
+    "json-server": "^1.0.0-beta.3",
+    "vite": "^5.4.1"
+  }
+}

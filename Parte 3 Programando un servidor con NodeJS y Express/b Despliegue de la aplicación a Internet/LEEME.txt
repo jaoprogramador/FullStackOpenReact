@@ -1,0 +1,110 @@
+En este tema se va a ver como crar un servidor back con nodeExpress y como exporner json que serán accesibles desde una capa front dentro del proyecto back
+
+
+En esta aplicación se define un proyecto Front que se comunica con un proyecto Back que expone servicios rest json y comunican entre sí.
+Arrancamos el proyecto back: npm start checkeamos en el explorador web
+	http://localhost:3001/api/notes veremos el json
+y luego el front npm run dev y chckeamos la comunicación en el explorador web
+	http://localhost:5173/
+
+PASE a PROD RENDER
+===================
+del FRONT generamos un desplegable npm run build y nos creará una carpeta dist con un html único . 
+Copiamos esa carpeta dist y la pegamos en la raíz del proyecto back
+ajustamos las urls relativas xq ya no usarán localhost:
+
+En el indes.js del back agregamos app.use(express.static('dist')) para que pueda cargar la parte estatica web.
+
+const baseUrl = '/api/notes'
+volvemos a recompilar la aplicacion y copiamos otra vez el dist de FRONT en la capeta de BACK
+comiteamos a GitHub (cuidado con el gitignore)la carpeta de back que contiene el dist con la parte front
+vamos a render y deployamos esa aplicacion back
+
+Nos dará esta URL, donde veremos la url que se ve el fron que onecta con nuestra parte BACK
+APPs en render de notas y agend
+
+========================
+	https://react-xhzi.onrender.com/
+	https://reactpersons.onrender.com/
+	
+El api rest esta en 
+============
+	https://react-xhzi.onrender.com/api/notes
+	https://reactpersons.onrender.com/api/persons
+	
+REPO GitHub
+==========
+https://github.com/jaoprogramador/reactPersons/
+https://github.com/jaoprogramador/react    ---NOTES
+
+Workspace local
+============
+C:\Users\user\Documents\Juan PC guillermo SpringAngularAWS\JAO\fullstackopen REACT\
+Parte 3 Programando un servidor con NodeJS y Express\b Despliegue de la aplicación a Internet
+
+Mongo Atlas user y passw
+==================
+https://cloud.mongodb.com/v2/66feae95c110c95f2d236a02#/overview
+
+jaoprogramador
+eBQlFg3kNN2M0pbL
+
+npm install mongodb
+mongodb+srv://jaoprogramador:<db_password>@cluster0.pxu2t.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+vamos a quitar la BD existente y poner:
+const url =
+  `mongodb+srv://jaoprogramador:${passwordNotes}@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority`
+  
+ Schema
+ ======
+
+ const noteSchema = new mongoose.Schema({
+  content: String,
+  important: Boolean,
+})
+
+const Note = mongoose.model('Note', noteSchema)
+
+INSERTAMOS ESTOS RGs por cmd
+========================
+node mongo.js eBQlFg3kNN2M0pbL Anna 040-1234556
+node mongo.js eBQlFg3kNN2M0pbL Arto Vihavainen  045-122456
+node mongo.js eBQlFg3kNN2M0pbL Ada Lovelace  040-123-236
+node mongo.js eBQlFg3kNN2M0pbL Marvin Panzar 040-3333444
+
+Anna 040-1234556
+
+
+
+
+
+LA AGENDA DE TELEFONOS NO ALMACENA CORRECTAMENTE EL TELEFONO
+
+Portafolio
+==========
+	React: 	Ejercicio de api Rest con NodeExpress publicado en Render
+		https://reactpersons.onrender.com/
+		https://react-xhzi.onrender.com/
+		
+	Angular: Aplicación con angular v 17 logueo que se autentica contra un API Rest que nos proporciona un token de acceso. HAcemos un routing securizado de distintas páginas en las que podemos ver como pasar información entre componentes. La aplicación hace uso de servicios y peticiones HTTP para el login o para obtener respuestas JSON y tratar la info por pantalla.Se hace uso de PIPE, para definir componentes genéricos control de errores, validacion de formularios, componentes de Angular material...
+			https://proyecto-final-angular-42db4.web.app/login
+	Spring Framework
+	Spring Cloud
+	 Vieja Aplicación  jaoprogramador
+	 Hacer una galeria con imagenes a estos proyectos
+	 Hacer aplicación 
+	 Subir ejercicio de midu dev CARRITO y me gusta no me gusta de TWITER
+	 
+	 
+	 HE LLEGAF¡DO HASTA Ejercicios 3.13.-3.14.Ç
+	 ===============================
+	 COMANDOS GitHub
+	 ==============
+	 
+	git init
+	git add .
+	git commit -a -m "Error tlf no muestra"
+	--git remote add origin https://github.com/jaoprogramador/reactPersons SOLO UNA VEZ
+	git push -u origin main
+	git status
