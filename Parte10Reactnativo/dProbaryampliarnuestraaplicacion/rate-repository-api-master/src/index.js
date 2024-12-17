@@ -1,5 +1,5 @@
 //CAMBIOS PARA LOCAL
-/* import http from 'http';
+import http from 'http';
 
 import logger from './utils/logger';
 import { API_PORT, APOLLO_PORT } from './config';
@@ -23,9 +23,9 @@ const startServer = async () => {
 };
 
 startServer();
- */
+ 
 //CAMBIOS PARA RENDER
-import http from 'http';
+/* import http from 'http';
 import logger from './utils/logger';
 import { API_PORT } from './config'; // APOLLO_PORT ya no se usará aquí
 import createApolloServer from './apolloServer';
@@ -54,4 +54,4 @@ const startServer = async () => {
   });
 };
 
-startServer();
+startServer(); */
