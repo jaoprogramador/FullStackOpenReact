@@ -1,2 +1,2 @@
 require('esm')(module); // Cargar esm explícitamente
-require('./src/index.js'); /
+require('./src/index.js'); 
