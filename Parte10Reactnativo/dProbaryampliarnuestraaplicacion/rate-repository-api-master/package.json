@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/index.js",
-    "start:dev": "nodemon ./src/index.js",
+    "start": "node -r esm ./src/index.js",
+    "start:dev": "nodemon -r esm ./src/index.js",
     "lint": "eslint ./src",
     "test": "jest .",
     "migrate:make": "knex migrate:make",
@@ -44,7 +44,7 @@
     "date-fns": "^2.9.0",
     "dotenv": "^11.0.0",
     "es6-error": "^4.1.1",
-    
+    "esm": "^3.2.25",
     "express": "^4.21.2",
     "graphql": "^16.2.0",
     "jsonwebtoken": "^9.0.2",
