@@ -1,6 +1,5 @@
 //CAMBIOS PARA LOCAL
 import http from 'http';
-
 import logger from './utils/logger';
 import { API_PORT, APOLLO_PORT } from './config';
 import createApolloServer from './apolloServer';
