@@ -12,7 +12,7 @@
     "migrate:latest": "knex migrate:latest",
     "build": "npm run migrate:latest",
     "seed:make": "knex seed:make",
-    "seed:run": "knex seed:run"
+    "seed:run": "npx knex seed:run"
   },
   "lint-staged": {
     "src/**/*.js": "eslint",
