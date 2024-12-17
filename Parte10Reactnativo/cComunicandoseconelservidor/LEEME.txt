@@ -1,0 +1,24 @@
+Aplicación FRONT react-native que se conecta a el BACK y mediante oauth nos permite logarnos a una aplicación que con graphql
+
+mediante un formulario de formik. El front tiene routing para navegar por distintos componentes segúnnuestro token de acceso
+: PASOS EJECUTAR
+arrancar front con npm expo start
+arrancar back con npm start
+arrancar la BD del back con npm run seed:run
+hacer alta con un usuario con el dashboard de graphql:
+	mutation {
+  		createUser(user: { username: "jaoprogramador", password: "12345" }) {
+    			id
+    			username
+  		}
+	}
+tambien podemos darnos de alta con uno existente despues de cagar la BD
+ {
+    users {
+        edges {
+        node {
+            username
+        }
+        }
+    }
+    }
