@@ -20,23 +20,121 @@ INSTALAMOS FORMIK PARA LOS FORMULARIOS
 INSTALAMOS PARA VALIDACIONES DE FORMS
     npm install yup
 
-========================================================================
-INSTALAMOS es una forma con configuración cero para comenzar a usar Apollo Client
-    npm install apollo-boost @apollo/react-hooks graphql
-INSTALAMOS PARA PODER DEFINIR VARIABLES DE ENTORNO 
-    npm install dotenv
-INSTALAMOS PARA GUARDAR INFO EN EL TERMINAL
-expo install @react-native-community/async-storage
-INSTALAMOS 
-npm install react-router-dom
 
-npm install @react-native-async-storage/async-storage
+===================================================================================
+EJECUTAR ANTES EN BACK (rate-repository-api) npm run seed:run PARA CARGARGAR DATPOS
+===================================================================================
+CHEKEAR GRAPHQL http://localhost:4000/
+PETICION
+    {
+    users {
+        edges {
+        node {
+            username
+        }
+        }
+    }
+    }
+RESPUESTA
+{
+  "data": {
+    "users": {
+      "edges": [
+        {
+          "node": {
+            "username": "kalle"
+          }
+        },
+        {
+          "node": {
+            "username": "elina"
+          }
+        },
+        {
+          "node": {
+            "username": "matti"
+          }
+        },
+        {
+          "node": {
+            "username": "johndoe"
+          }
+        },
+        {
+          "node": {
+            "username": "leeroyjenkins"
+          }
+        }
+      ]
+    }
+  }
+}
 
-=====================================================================
-INSTALAMOS PARA PRUEBAS
-    npm install --save-dev jest jest-expo eslint-plugin-jest
-npm install --save-dev @testing-library/react-native @testing-library/jest-native
-npm install @testing-library/react-native @testing-library/jest-native
-npm install @testing-library/react
 
+PETICION
+query {
+    repositories {
+      edges {
+        node {
+          id
+          name
+          ownerName
+          createdAt
+          fullName
+          reviewCount
+          ratingAverage
+          forksCount
+          stargazersCount
+          description
+          language
+          ownerAvatarUrl
+        }
+      }
+    }
+  }
+`;
+RESPUESTA
+    {
+  "data": {
+    "repositories": {
+      "edges": [
+        {
+          "node": {
+            "id": "jaredpalmer.formik",
+            "name": "formik",
+            "ownerName": "jaredpalmer",
+            "createdAt": 
 
+PETICION AUTENTICARSE
+mutation {
+  authenticate(credentials: { username: "kalle", password: "password" }) {
+    accessToken
+  }
+}
+
+RESPUESTA 
+{
+  "data": {
+    "authenticate": {
+      "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYmU0Mjk4NC0wNTFiLTRhMDEtYjQ1ZC1iOGQyOWMzMjIwMGMiLCJpYXQiOjE3MzM4NDMxMDYsImV4cCI6MjMzODY0MzEwNiwic3ViIjoiYWNjZXNzVG9rZW4ifQ.Mr4_4Y0dAbiO0Ac9-smFcqaBKZOLVl1plS6eSNVq-7o"
+    }
+  }
+}
+
+PETICION ALTA
+mutation {
+  createUser(user: { username: "jaoprogramador", password: "12345" }) {
+    id
+    username
+  }
+}
+
+RESPUESTA 
+{
+  "data": {
+    "createUser": {
+      "id": "92c44d18-5e03-40f1-9ad2-63e71da4a6c3",
+      "username": "jaoprogramador"
+    }
+  }
+}

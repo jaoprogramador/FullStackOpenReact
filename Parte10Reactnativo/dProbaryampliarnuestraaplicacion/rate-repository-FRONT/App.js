@@ -1,35 +1,45 @@
 import React from 'react';
+//import 'dotenv/config';
 import Main from './src/components/Main';
 import { NativeRouter } from 'react-router-native';
 import {  View } from 'react-native';
-import Text from './src/components/Text';
-import { ApolloProvider } from '@apollo/react-hooks';
-import createApolloClient from './src/utils/apolloClient';
+import { Provider as PaperProvider } from 'react-native-paper'; 
+
+/* import { ApolloProvider } from '@apollo/react-hooks'; */
+import { ApolloProvider } from '@apollo/client';  
 import Constants from 'expo-constants';
-/* import dotenv from 'dotenv';
-dotenv.config();   */
+import createApolloClient from './src/utils/apolloClient';
+
+import AuthStorage from './src/utils/authStorage';
+/* import AuthStorageContext from './src/context/AuthStorageContext'; */
+
+const authStorage = new AuthStorage();
+const apolloClient = createApolloClient(authStorage);
 
 
-const apolloClient = createApolloClient();
 
 const App = () => {
-  /* console.log('App:::Constants.manifest ',Constants.manifest);
-  console.log('App:::Constants.extra ',Constants.extra);
-  console.log("('App:::APOLLO_URI:", process.env.APOLLO_URI);
-  console.log("('App:::APOLLO_URI:", process.env.ENV); */
+  
+
+console.log('JAO ',Constants.expoConfig.extra);
+
+
+
   return (
-    
-  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-   <NativeRouter>
-        <ApolloProvider client={apolloClient}>
-          <Main />;
-        </ApolloProvider>
-    </NativeRouter>
-  </View>
+    <PaperProvider>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <NativeRouter>
+      
+          <ApolloProvider client={apolloClient}>
+            {/*  <AuthStorageContext.Provider value={authStorage}> */}
+                <Main />
+              {/* </AuthStorageContext.Provider> */}
+            </ApolloProvider> 
+          </NativeRouter>
+      </View>
+  </PaperProvider>
   );
-    {/* <NativeRouter>
-        <Main />;
-    </NativeRouter> */}
+  
 
   };
 

@@ -1,5 +1,7 @@
-import { gql } from 'apollo-boost';
+import { gql } from '@apollo/client';
 
+//import { gql } from 'apollo-boost';
+//VERSION1 GET_REPOSITORIES 
 export const GET_REPOSITORIES = gql`
   query {
     repositories {
@@ -14,7 +16,79 @@ export const GET_REPOSITORIES = gql`
       }
     }
   }
+`; 
+
+
+export const GET_REPOSITORY2 = gql`
+  query GetRepository($id: ID!) {
+    repository(id: $id) {
+      id
+      fullName
+      description
+      language
+      forksCount
+      stargazersCount
+      ratingAverage
+      reviewCount
+      url
+      ownerAvatarUrl
+    }
+  }
 `;
+export const GET_REPOSITORY = gql`
+  query GetRepository($id: ID!) {
+    repository(id: $id) {
+      id
+      name
+      ownerName
+      fullName
+      language
+      ownerAvatarUrl
+      ratingAverage
+      reviewCount
+      description
+      stargazersCount  
+      forksCount 
+      url
+
+
+    }
+  }
+`;
+export const GET_REPOSITORY_WITH_REVIEWS = gql`
+  query GetRepositoryWithReviews($id: ID!) {
+    repository(id: $id) {
+      id
+      name
+      ownerName
+      fullName
+      language
+      ownerAvatarUrl
+      ratingAverage
+      reviewCount
+      description
+      stargazersCount  
+      forksCount 
+      url
+      reviews {
+      edges {
+        node {
+          id
+          text
+          rating
+          createdAt
+          user {
+            id
+            username
+          }
+        }
+      }
+    }
+
+    }
+  }
+`;
+
 
 export const GET_USER = gql`
   query GetUser {
@@ -25,57 +99,17 @@ export const GET_USER = gql`
   }
 `;
 
-export const GET_REPOSITORY = gql`
-  query Repository($id: ID!) {
-    repository(id: $id) {
+export const ME = gql`
+  query Me {
+    me {
       id
-      fullName
-      description
-      language
-      stargazersCount
-      reviews {
-        edges {
-          node {
-            id
-            text
-            rating
-            createdAt
-            user {
-              id
-              username
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-export const CREATE_REVIEW = gql`
-  mutation CreateReview($ownerName: String!, $repositoryName: String!, $rating: Int!, $reviewText: String) {
-    createReview(ownerName: $ownerName, repositoryName: $repositoryName, rating: $rating, reviewText: $reviewText) {
-      id
-      repositoryId
-    }
-  }
-`;
-
-
-export const GET_REPOSITORIES2 = gql`
-  query getRepositories($searchKeyword: String) {
-    repositories(searchKeyword: $searchKeyword) {
-      edges {
-        node {
-          id
-          fullName
-          description
-        }
-      }
+      username
     }
   }
 `;
 
 export const GET_REVIEWS = gql`
-  query GetRepositoryReviews($repositoryId: ID!, $first: Int, $after: String) {
+  query GetReviews($repositoryId: ID!, $first: Int!, $after: String) {
     repository(id: $repositoryId) {
       id
       fullName
@@ -87,7 +121,6 @@ export const GET_REVIEWS = gql`
             text
             rating
             createdAt
-            repositoryId
             user {
               id
               username
@@ -97,7 +130,6 @@ export const GET_REVIEWS = gql`
         }
         pageInfo {
           endCursor
-          startCursor
           hasNextPage
         }
       }
@@ -105,29 +137,63 @@ export const GET_REVIEWS = gql`
   }
 `;
 
-export const GET_CURRENT_USER = gql`
-  query getCurrentUser($includeReviews: Boolean = false) {
+export const GET_REPOSITORY_REVIEWS = gql`
+  query GetRepositoryReviews($repositoryId: ID!, $first: Int, $after: String) {
+  repository(id: $repositoryId) {
+    id
+    fullName
+    reviews(first: $first, after: $after) {
+      edges {
+        node {
+          id
+          text
+          rating
+          createdAt
+          user {
+            id
+            username
+          }
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}
+`;
+export const ME_REPOSITORIES = gql`
+  query Me {
     me {
       id
       username
-      reviews @include(if: $includeReviews) {
+    }
+  }
+`;
+export const ME_REVIEWS = gql`
+  query MeReviews($first: Int, $after: String) {
+    me {
+      id
+      username
+      reviews(first: $first, after: $after) {
         edges {
           node {
             id
-            text
             rating
+            text
             createdAt
             repository {
               id
               fullName
+              url
             }
           }
-          cursor
         }
         pageInfo {
-          endCursor
-          startCursor
           hasNextPage
+          endCursor
         }
       }
     }

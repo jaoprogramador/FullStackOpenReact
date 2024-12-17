@@ -19,8 +19,10 @@ class AuthStorage {
   }
 
   async getAccessToken() {
+    console.log("AuthStorage:::getAccessTokenINI","");
     try {
       const token = await AsyncStorage.getItem(`${this.namespace}:accessToken`);
+      console.log("AuthStorage:::getAccessTokenINI.token",token);
       return token ? JSON.parse(token) : null;
     } catch (error) {
       console.error('Error getting access token:', error);
@@ -30,6 +32,7 @@ class AuthStorage {
 
   async setAccessToken(accessToken) {
     try {
+      console.log("AuthStorage:::setAccessTokenINI.accessToken",accessToken);
       await AsyncStorage.setItem(
         `${this.namespace}:accessToken`,
         JSON.stringify(accessToken)
@@ -42,6 +45,7 @@ class AuthStorage {
 
   async removeAccessToken() {
     try {
+      console.log("AuthStorage:::removeAccessToken","");
       await AsyncStorage.removeItem(`${this.namespace}:accessToken`);
     } catch (error) {
       console.error('Error removing access token:', error);

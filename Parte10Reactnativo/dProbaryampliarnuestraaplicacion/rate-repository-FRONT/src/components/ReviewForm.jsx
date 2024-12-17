@@ -1,124 +1,126 @@
 import React from 'react';
-import { View, Text, Button, TextInput, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet, Button } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { TextInput, Text } from 'react-native-paper';
 import { useMutation } from '@apollo/client';
 import { CREATE_REVIEW } from '../graphql/mutations';
-import { useHistory } from 'react-router-native';
-
-const validationSchema = Yup.object().shape({
-  ownerName: Yup.string().required('Repository owner name is required'),
-  repositoryName: Yup.string().required('Repository name is required'),
-  rating: Yup.number()
-    .required('Rating is required')
-    .min(0, 'Rating should be between 0 and 100')
-    .max(100, 'Rating should be between 0 and 100'),
-  reviewText: Yup.string().optional(),
-});
+//import { useHistory } from 'react-router-native';
+import { useNavigate } from 'react-router-native';
 
 const ReviewForm = () => {
-  const history = useHistory();
   const [createReview] = useMutation(CREATE_REVIEW);
+  //const history = useHistory();
+  const navigate = useNavigate(); 
+  const initialValues = {
+    ownerName: '',
+    repositoryName: '',
+    rating: '',
+    text: '',
+  };
 
-  const handleSubmit = async (values) => {
+  const validationSchema = Yup.object().shape({
+    ownerName: Yup.string()
+      .required('Repository owner\'s GitHub username is required.'),
+    repositoryName: Yup.string()
+      .required('Repository name is required.'),
+    rating: Yup.number()
+      .required('Rating is required.')
+      .min(0, 'Rating must be at least 0.')
+      .max(100, 'Rating cannot exceed 100.'),
+    text: Yup.string().optional(),
+  });
+
+  const onSubmit = async (values) => {
     try {
-      const { ownerName, repositoryName, rating, reviewText } = values;
-
-      // Ejecutar la mutación para crear la revisión
       const { data } = await createReview({
         variables: {
-          ownerName,
-          repositoryName,
-          rating,
-          reviewText,
+          /* review: {
+            ...values,
+            rating: Number(values.rating),
+          }, */
+          review: {
+            ownerName: values.ownerName,
+            repositoryName: values.repositoryName,
+            rating: Number(values.rating),
+            text: values.text || '',
+          },
+  
+          
         },
       });
 
-      // Redirigir al repositorio
-      history.push(`/repository/${data.createReview.repositoryId}`);
+      if (data?.createReview?.repositoryId) {
+        
+        //history.push(`/repository/${data.createReview.repositoryId}`);
+        navigate(`/repository/${data.createReview.repositoryId}`);
+      }
     } catch (error) {
-      Alert.alert('Error', 'There was an issue creating your review.');
+      console.error('Error creating review:', error);
     }
   };
 
   return (
-    <View style={styles.container}>
-      <Formik
-        initialValues={{
-          ownerName: '',
-          repositoryName: '',
-          rating: '',
-          reviewText: '',
-        }}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ handleChange, handleBlur, handleSubmit, values, errors }) => (
-          <View>
-            <TextInput
-              style={styles.input}
-              placeholder="Repository owner name"
-              onChangeText={handleChange('ownerName')}
-              onBlur={handleBlur('ownerName')}
-              value={values.ownerName}
-            />
-            {errors.ownerName && <Text style={styles.errorText}>{errors.ownerName}</Text>}
+    <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+      {({ handleChange, handleSubmit, values, errors, touched }) => (
+        <View style={styles.container}>
+          <TextInput
+            label="Repository Owner's GitHub Username"
+            onChangeText={handleChange('ownerName')}
+            value={values.ownerName}
+            error={touched.ownerName && errors.ownerName}
+            style={styles.input}
+          />
+          <Text style={styles.error}>{touched.ownerName && errors.ownerName}</Text>
 
-            <TextInput
-              style={styles.input}
-              placeholder="Repository name"
-              onChangeText={handleChange('repositoryName')}
-              onBlur={handleBlur('repositoryName')}
-              value={values.repositoryName}
-            />
-            {errors.repositoryName && <Text style={styles.errorText}>{errors.repositoryName}</Text>}
+          <TextInput
+            label="Repository Name"
+            onChangeText={handleChange('repositoryName')}
+            value={values.repositoryName}
+            error={touched.repositoryName && errors.repositoryName}
+            style={styles.input}
+          />
+          <Text style={styles.error}>{touched.repositoryName && errors.repositoryName}</Text>
 
-            <TextInput
-              style={styles.input}
-              placeholder="Rating (0-100)"
-              keyboardType="numeric"
-              onChangeText={handleChange('rating')}
-              onBlur={handleBlur('rating')}
-              value={values.rating}
-            />
-            {errors.rating && <Text style={styles.errorText}>{errors.rating}</Text>}
+          <TextInput
+            label="Rating (0-100)"
+            onChangeText={handleChange('rating')}
+            value={values.rating}
+            error={touched.rating && errors.rating}
+            keyboardType="numeric"
+            style={styles.input}
+          />
+          <Text style={styles.error}>{touched.rating && errors.rating}</Text>
 
-            <TextInput
-              style={[styles.input, styles.textArea]}
-              placeholder="Review"
-              multiline
-              onChangeText={handleChange('reviewText')}
-              onBlur={handleBlur('reviewText')}
-              value={values.reviewText}
-            />
+          <TextInput
+            label="Review"
+            onChangeText={handleChange('text')}
+            value={values.text}
+            multiline
+            style={[styles.input, styles.textarea]}
+          />
+          <Text style={styles.error}>{touched.text && errors.text}</Text>
 
-            <Button title="Create a review" onPress={handleSubmit} />
-          </View>
-        )}
-      </Formik>
-    </View>
+          <Button onPress={handleSubmit} title="Submit Review" />
+        </View>
+      )}
+    </Formik>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 15,
-    backgroundColor: '#fff',
-    flex: 1,
+    padding: 20,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 4,
-    padding: 10,
-    marginVertical: 10,
+    marginBottom: 10,
   },
-  textArea: {
+  textarea: {
     height: 100,
   },
-  errorText: {
+  error: {
     color: 'red',
-    marginBottom: 10,
+    fontSize: 12,
   },
 });
 

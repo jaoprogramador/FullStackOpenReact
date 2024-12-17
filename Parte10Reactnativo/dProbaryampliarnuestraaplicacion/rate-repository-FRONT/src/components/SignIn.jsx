@@ -1,16 +1,17 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { View, Pressable,StatusBar, Text, StyleSheet } from 'react-native';
+import { View, Pressable, Text, StyleSheet } from 'react-native';
 import * as Yup from 'yup';
-import FormikTextInput from './FormikTextInput'; // Asegúrate de implementar este componente.
-import Constants from 'expo-constants';
+//import { useHistory } from 'react-router-native';
+import { useNavigate } from 'react-router-native';
+
+import useSignIn from '../hooks/useSignIn';
+import FormikTextInput from './FormikTextInput'; // Asegúrate de tener este componente implementado.
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Hace que ocupe todo el espacio disponible
-    padding: 16, // Espaciado interno uniforme
-    backgroundColor: '#fff', // Color de fondo para diferenciar
-    marginTop: Constants.statusBarHeight,
+    padding: 16,
+    backgroundColor: '#fff',
   },
   button: {
     backgroundColor: '#0066CC',
@@ -30,11 +31,24 @@ const styles = StyleSheet.create({
   },
 });
 
+const validationSchema = Yup.object({
+  username: Yup.string()
+    .required('Username is required')
+    .min(3, 'Username must be at least 3 characters long'),
+  password: Yup.string()
+    .required('Password is required')
+    .min(5, 'Password must be at least 5 characters long'),
+});
+
 const SignInForm = ({ onSubmit }) => {
   return (
     <View style={styles.container}>
       <FormikTextInput name="username" placeholder="Username" />
-      <FormikTextInput name="password" placeholder="Password" secureTextEntry />
+      <FormikTextInput
+        name="password"
+        placeholder="Password"
+        secureTextEntry
+      />
       <Pressable style={styles.button} onPress={onSubmit}>
         <Text style={styles.buttonText}>Sign In</Text>
       </Pressable>
@@ -43,30 +57,34 @@ const SignInForm = ({ onSubmit }) => {
 };
 
 const SignIn = () => {
+  const [signIn] = useSignIn();
+  //const history = useHistory();
+  const navigate = useNavigate();
+
+
   const initialValues = {
-    username: '',
-    password: '',
+    username: 'jaoprogramador',
+    password: '12345',
   };
 
-  const validationSchema = Yup.object({
-    username: Yup.string()
-      .required('Username is required')
-      .min(3, 'Username must be at least 3 characters long'),
-    password: Yup.string()
-      .required('Password is required')
-      .min(6, 'Password must be at least 6 characters long'),
-  });
-
   const onSubmit = (values) => {
-    console.log('Form values:', values);
-    // Aquí puedes añadir la lógica para manejar el inicio de sesión.
+    try {
+      const data = signIn(values);
+      if (data) {
+        //history.push('/'); // Redirigir a la vista de lista de repositorios
+        navigate('/respositoryList'); 
+      }
+    } catch (e) {
+      console.error('Error during sign-in:', e);
+    }
+    console.log(values); // Imprime los valores del formulario en la consola.
   };
 
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={onSubmit}
-      validationSchema={validationSchema}
+      validationSchema={validationSchema} // Agregamos el esquema de validación
     >
       {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
     </Formik>

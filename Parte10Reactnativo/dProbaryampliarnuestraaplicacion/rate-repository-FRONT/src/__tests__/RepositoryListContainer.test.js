@@ -1,7 +1,6 @@
 import React from 'react';
-import { render } from '@testing-library/react-native'; // O '@testing-library/react' si estás usando una app web
-import '@testing-library/jest-native/extend-expect'; // Para utilizar `toHaveTextContent`
-import RepositoryListContainer from '../components/RepositoryListContainer'; // Ajusta la ruta según tu estructura de proyecto
+import { render } from '@testing-library/react-native';
+import RepositoryListContainer from '../components/RepositoryListContainer'; // Ajusta la ruta según tu estructura
 
 describe('RepositoryList', () => {
   describe('RepositoryListContainer', () => {
@@ -53,29 +52,44 @@ describe('RepositoryList', () => {
         <RepositoryListContainer repositories={repositories} />
       );
 
-      const repositoryItems = getAllByTestId('repositoryItem');
+      // Verifica el nombre completo de los repositorios
+      const fullNames = getAllByTestId('repositoryFullName');
+      expect(fullNames[0]).toHaveTextContent('jaredpalmer/formik');
+      expect(fullNames[1]).toHaveTextContent('async-library/react-async');
 
-      expect(repositoryItems).toHaveLength(2);
+      // Verifica la descripción de los repositorios
+      const descriptions = getAllByTestId('repositoryDescription');
+      expect(descriptions[0]).toHaveTextContent(
+        'Build forms in React, without the tears'
+      );
+      expect(descriptions[1]).toHaveTextContent(
+        'Flexible promise-based React data loader'
+      );
 
-      const [firstRepository, secondRepository] = repositoryItems;
+      // Verifica el idioma de los repositorios
+      const languages = getAllByTestId('repositoryLanguage');
+      expect(languages[0]).toHaveTextContent('TypeScript');
+      expect(languages[1]).toHaveTextContent('JavaScript');
 
-      // Verificamos la información del primer repositorio
-      expect(firstRepository).toHaveTextContent('jaredpalmer/formik');
-      expect(firstRepository).toHaveTextContent('Build forms in React, without the tears');
-      expect(firstRepository).toHaveTextContent('TypeScript');
-      expect(firstRepository).toHaveTextContent('1.6k'); // Contamos en miles
-      expect(firstRepository).toHaveTextContent('21.9k'); // Contamos en miles
-      expect(firstRepository).toHaveTextContent('88');
-      expect(firstRepository).toHaveTextContent('3');
+      // Verifica el recuento de bifurcaciones
+      const forkCounts = getAllByTestId('repositoryForks');
+      expect(forkCounts[0]).toHaveTextContent('1.6k');
+      expect(forkCounts[1]).toHaveTextContent('69');
 
-      // Verificamos la información del segundo repositorio
-      expect(secondRepository).toHaveTextContent('async-library/react-async');
-      expect(secondRepository).toHaveTextContent('Flexible promise-based React data loader');
-      expect(secondRepository).toHaveTextContent('JavaScript');
-      expect(secondRepository).toHaveTextContent('69');
-      expect(secondRepository).toHaveTextContent('1.8k'); // Contamos en miles
-      expect(secondRepository).toHaveTextContent('72');
-      expect(secondRepository).toHaveTextContent('3');
+      // Verifica el recuento de estrellas
+      const starCounts = getAllByTestId('repositoryStars');
+      expect(starCounts[0]).toHaveTextContent('21.9k');
+      expect(starCounts[1]).toHaveTextContent('1.8k');
+
+      // Verifica el promedio de calificación
+      const ratings = getAllByTestId('repositoryRating');
+      expect(ratings[0]).toHaveTextContent('88');
+      expect(ratings[1]).toHaveTextContent('72');
+
+      // Verifica el recuento de reseñas
+      const reviews = getAllByTestId('repositoryReviews');
+      expect(reviews[0]).toHaveTextContent('3');
+      expect(reviews[1]).toHaveTextContent('3');
     });
   });
 });

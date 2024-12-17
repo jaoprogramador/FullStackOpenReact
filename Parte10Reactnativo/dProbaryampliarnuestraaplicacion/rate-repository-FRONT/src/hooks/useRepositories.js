@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
-
+/*
 const GET_REPOSITORIES = gql`
   query {
     repositories {
@@ -24,7 +23,7 @@ const GET_REPOSITORIES = gql`
   }
 `;
 
-/* const useRepositories = () => {
+ const useRepositories = () => {
   const [repositories, setRepositories] = useState();
   const [loading, setLoading] = useState(false);
 
@@ -45,21 +44,102 @@ const GET_REPOSITORIES = gql`
 
   return { repositories, loading, refetch: fetchRepositories };
 }; */
-const useRepositories = () => {
-    const { data, error, loading } = useQuery(GET_REPOSITORIES, {
-      fetchPolicy: 'cache-and-network', // Política de recuperación
-    });
-  
-    // Manejo del estado de carga y errores (opcional)
-    if (loading) return { loading };
-    if (error) return { error };
-  
-    // Extraer los repositorios de la consulta
-    const repositories = data?.repositories?.edges.map(edge => edge.node);
-  
-    return { repositories };
+//VERSION UNO DE USEREPOSITORY
+/* const useRepositories = () => {
+  const { data, error, loading } = useQuery(GET_REPOSITORIES, {
+    fetchPolicy: 'cache-and-network', // Política de recuperación
+  });
+
+  // Manejo del estado de carga y errores
+  if (loading) return { loading: true, repositories: [] };  // Retorna repositorios vacíos mientras carga
+  if (error) return { error, repositories: [] };             // Si hay un error, retorna repositorios vacíos
+  console.log('HOOK:::useRepositories',data);
+  // Asegúrate de que los datos sean correctos y devuelve el array de repositorios
+  const repositories = data?.repositories?.edges?.map(edge => edge.node) || []; 
+
+  return { repositories };
+}; */
+//VERSION2 DE USERREPOSITORY
+//VERSION2 DE GET_REPOSITORIES PARAMETRIZADO POR ORDEN BY DESC O ASC
+/* export const GET_REPOSITORIES = gql`
+  query getRepositories(
+    $orderBy: AllRepositoriesOrderBy
+    $orderDirection: OrderDirection
+  ) {
+    repositories(orderBy: $orderBy, orderDirection: $orderDirection) {
+      edges {
+        node {
+          id
+          name
+          ownerName
+          createdAt
+          fullName
+          reviewCount
+          ratingAverage
+          forksCount
+          stargazersCount
+          description
+          language
+          ownerAvatarUrl
+        }
+      }
+    }
+} 
+
+`;
+const useRepositories = ({ orderBy = 'CREATED_AT', orderDirection = 'DESC' } = {}) => {
+  const { data, loading, error, refetch } = useQuery(GET_REPOSITORIES, {
+    variables: { orderBy, orderDirection },
+    fetchPolicy: 'cache-and-network',
+  });
+
+   // Desestructurar datos correctamente
+   const repositories = data?.repositories?.edges.map(edge => edge.node) || [];
+
+   return {
+     repositories,
+     loading,
+     refetch,
+     error,
+   };
+};*/
+//VERSION 3
+const GET_REPOSITORIES = gql`
+  query repositories($searchKeyword: String, $orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection) {
+  repositories(searchKeyword: $searchKeyword, orderBy: $orderBy, orderDirection: $orderDirection) {
+    edges {
+      node {
+        id
+        name
+        ownerName
+        fullName
+        reviewCount
+        ratingAverage
+        forksCount
+        stargazersCount
+        description
+        language
+        ownerAvatarUrl
+
+        }
+      }
+    }
+  }
+`;
+
+const useRepositories = ({ searchKeyword = '', orderBy = 'CREATED_AT', orderDirection = 'DESC' }) => {
+  const { data, loading, error } = useQuery(GET_REPOSITORIES, {
+    variables: { searchKeyword, orderBy, orderDirection },
+    fetchPolicy: 'cache-and-network',
+  });
+
+  return {
+    repositories: data?.repositories?.edges || [],
+    loading,
+    error,
   };
-  
+};
 
 
-export default useRepositories;
+
+export default useRepositories; 

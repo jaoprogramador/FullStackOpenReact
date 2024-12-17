@@ -1,59 +1,54 @@
 import React from 'react';
-import { Text,StatusBar, StyleSheet, View } from 'react-native';
+import Constants from 'expo-constants';
+import { Text, StyleSheet, ScrollView ,View } from 'react-native';
 /* import RepositoryList from './RepositoryList'; */
-import AppBar from '../components/AppBar'; // Verifica la ruta
+import AppBar from '../components/AppBar'; 
 import RepositoryList from '../components/RepositoryList';
-import SingleRepositoryScreen from '../components/SingleRepositoryScreen';
-import { useQuery } from '@apollo/client';
-import { Route, Routes, NativeRouter,Switch, Redirect } from 'react-router-native';; 
-import SignIn from './SignIn';
-import SignOut from './SignOut';
+import RepositoryView from '../components/RepositoryView';
+import ExtraTab1 from '../components/ExtraTab1';
+import Welcome from '../components/Welcome';
 import ReviewForm from '../components/ReviewForm';
-import RepositoryListScreen from './RepositoryListScreen'; 
-import MyReviews from './MyReviews';
-import { GET_USER } from '../graphql/queries';
-
+//import SignUpForm from '../components/SignUpForm';
+import SignUpForm from './SignUpForm ';
+import { Route, Routes, Switch, Redirect } from 'react-router-native';; 
+import SignIn from './SignIn';
+import ReviewList from './ReviewList';
+import MyReviews  from './MyReviews';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa', // Color de fondo para el contenedor
+    backgroundColor: '#e1e4e8',
   },
-  content: {
-    flex: 1, // Asegura que el contenido ocupe solo el espacio necesario
-    paddingHorizontal: 16, // Agrega espacio horizontal
-    paddingTop: 16, // Espacio entre el TabBar y el formulario
+  scrollableContent: {
+    flexGrow: 1, // Permite que el contenido se expanda
   },
+
 
 });
 
-const Main = () => {
-  const { data, loading } = useQuery(GET_USER);
-  console.log("Main:::data ",data);
-  console.log("Main:::loading ",loading);
-  if (loading) {
-    return null; // Mostrar un indicador de carga
-  }
 
-  const isLoggedIn = !!data?.me;
-  console.log("Main:::isLoggedIn ",isLoggedIn);
+const Main = () => {
   return (
     <View style={styles.container}>
       <AppBar />
-      {/* <NativeRouter> */}
+      <ScrollView contentContainerStyle={styles.scrollableContent}>
         <Routes>
-          <Route path="/" element={<RepositoryList />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signout" element={<SignOut />} />
-          <Route path="/repository/:id" element={<SingleRepositoryScreen />} />
-          <Route path="/create-review" element={<ReviewForm />} />
-          <Route path="/Repository-list-screen" element={<RepositoryListScreen />} />  
-          <Route path="/my-reviews" component={MyReviews} exact />
-        </Routes>
-      {/* </NativeRouter> */}
-      <View style={styles.content}>
-        {isLoggedIn ? <RepositoryList /> :<SignIn/> }
-        </View>
-      {/* {isLoggedIn ? alert("listado") : alert("Formulario") } */}
+        <Route path="/" element={<Welcome />} />
+        <Route path="/respositoryList" element={<RepositoryList />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUpForm  />} />
+        {/* <Route path="/signin" element={<ReviewList />} /> */}
+        <Route path="/extra1" element={<ExtraTab1 />} />
+        <Route path="/extra2" element={<ExtraTab1 />} />
+        <Route path="/extra3" element={<ExtraTab1 />} />
+        <Route path="/repository/:id" element={<RepositoryView />} />
+        <Route path="/create-review" element={<ReviewForm/>} />
+        <Route path="/repository/:id/reviews" element={<ReviewList/>} />
+        <Route path="/my-reviews" element={<MyReviews />} />
+      </Routes>
+      </ScrollView>
+      
+
     </View>
   );
 };

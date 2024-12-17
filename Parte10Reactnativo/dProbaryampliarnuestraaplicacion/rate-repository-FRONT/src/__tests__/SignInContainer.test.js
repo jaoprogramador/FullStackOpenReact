@@ -1,38 +1,38 @@
 import React from 'react';
-import { render, fireEvent, waitFor, act } from '@testing-library/react-native'; // O '@testing-library/react' para aplicaciones web
-import SignInContainer from 'src\components\SignIn';
-
+import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
+//import SignInContainer from '../components/SignInContainer'; // Ajusta la ruta según tu estructura
+import SignInContainer from '../components/SignInContainer';
 describe('SignIn', () => {
   describe('SignInContainer', () => {
     it('calls onSubmit function with correct arguments when a valid form is submitted', async () => {
-      // Creamos una función simulada para verificar el llamado a onSubmit
-      const onSubmitMock = jest.fn();
+      // Simulacro de la función onSubmit
+      const mockOnSubmit = jest.fn();
 
-      // Renderizamos el componente SignInContainer
+      // Renderiza el formulario con el mock
       const { getByPlaceholderText, getByText } = render(
-        <SignInContainer onSubmit={onSubmitMock} />
+        <SignInContainer onSubmit={mockOnSubmit} />
       );
 
-      // Seleccionamos los inputs y el botón de envío
+      // Localiza los campos de entrada y el botón
       const usernameInput = getByPlaceholderText('Username');
       const passwordInput = getByPlaceholderText('Password');
-      const submitButton = getByText('Sign in');
+      const submitButton = getByText('Sign In');
 
-      // Llenamos los inputs usando fireEvent
+      // Rellena los campos de entrada
       await act(async () => {
         fireEvent.changeText(usernameInput, 'testuser');
         fireEvent.changeText(passwordInput, 'password123');
       });
 
-      // Simulamos el envío del formulario
+      // Simula el envío del formulario
       await act(async () => {
         fireEvent.press(submitButton);
       });
 
-      // Esperamos que se haya llamado la función onSubmit con los argumentos correctos
+      // Verifica que onSubmit haya sido llamado con los argumentos correctos
       await waitFor(() => {
-        expect(onSubmitMock).toHaveBeenCalledTimes(1);
-        expect(onSubmitMock).toHaveBeenCalledWith({
+        expect(mockOnSubmit).toHaveBeenCalledTimes(1);
+        expect(mockOnSubmit).toHaveBeenCalledWith({
           username: 'testuser',
           password: 'password123',
         });
