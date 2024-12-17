@@ -1,0 +1,135 @@
+ejecuta npm run dev
+http://localhost:3000/ping
+
+Ejercicios 9.8.-9.9.
+Antes de comenzar los ejercicios
+Para este conjunto de ejercicios, desarrollaras un backend para un proyecto existente llamado Patientor, que es una aplicación simple de registros médicos para doctores que manejan diagnósticos e información básica de la salud de sus pacientes.
+
+El frontend ya ha sido creado por expertos externos y tu tarea es crear un backend para darle soporte al código existente.
+
+ADVERTENCIA
+Bastante a menudo, VS code pierde el registro de lo que realmente esta pasando en el código y muestra advertencias relacionadas al tipo o estilo a pesar de que el código ya ha sido arreglado. Si esto sucede (a mi me ha sucedido bastante seguido), cierra y vuelve a abrir el archivo que te da problemas o simplemente reinicia el editor. También es bueno asegurarse de que todo realmente funciona ejecutando el compilador y ESlint desde la linea de comandos:
+
+npm run tsc
+npm run lintcopy
+Cuando lo ejecutamos en la linea de comandos obtienes el "resultado real". Entonces, ¡no confíes demasiado en el editor!
+
+
+npm install express
+npm install @types/express --save-dev
+
+9.8: Patientor backend, paso 1
+Inicializa un nuevo proyecto de backend que será utilizado por el frontend. Configura ESlint y tsconfig con las mismas configuraciones que se utilizan en el material. Define un endpoint que responda a las solicitudes HTTP GET para la ruta /api/ping.
+
+El proyecto debería poder ejecutarse con scripts npm, tanto en modo de desarrollo y como código compilado, en modo de producción.
+
+Ejercicios 9.10.-9.11.
+De manera similar al servicio de vuelo de Ilari, no usamos una base de datos real en nuestra aplicación, sino que usamos datos codificados, es decir, en los archivos diagnoses.ts y patients.ts. Obten los archivos y guárdalos en un directorio llamado data en tu proyecto. Todas la modificaciones de datos se pueden realizar en la memoria de ejecución, por lo que durante esta parte no es necesario escribir a un archivo.
+
+9.10: Patientor backend, paso 3
+Crea un tipo Diagnose y utilízalo para crear un endpoint /api/diagnoses para obtener todos los diagnósticos con HTTP GET.
+
+Estructura tu código correctamente utilizando directorios y archivos con nombres apropiados.
+
+Ten en cuenta que diagnoses pueden contener o no el campo latin. Es posible que quieras utilizar propiedades opcionales en la definición de tipos.
+
+src/
+├── app.ts               // Punto de entrada principal
+├── routes/              // Contendrá las rutas
+│   ├── diagnoses.ts     // Ruta para /api/diagnoses
+├── services/            // Contendrá la lógica del servicio
+│   ├── diagnoseService.ts
+├── data/                // Datos precargados
+│   ├── diagnoses.ts
+├── types.ts             // Definición de tipos
+├── utils/               // Utilidades comunes, opcional
+├── index.ts             // Inicia la aplicación
+
+9.11: Patientor backend, paso 4
+Crea el tipo de datos Patient y configura un endpoint GET /api/patients que devuelva todos los pacientes al frontend, excluyendo el campo ssn. Utiliza un tipo de utilidad para asegurarte de que estas seleccionando y devolviendo solo los campos deseados.
+
+En este ejercicio, puedes asumir que el campo gender tiene el tipo string.
+
+Prueba el endpoint con el navegador y asegúrate de que ssn no esté incluido en la respuesta:
+
+http://localhost:3000/api/patients
+     {
+        "id": "d2773336-f723-11e9-8f0b-362b9e155667",
+        "name": "John McClane",
+        "dateOfBirth": "1986-07-09",
+        "ssn": "090786-122X",
+        "gender": "male",
+        "occupation": "New york city cop"
+    },
+    {
+        "id": "d2773598-f723-11e9-8f0b-362b9e155667",
+        "name": "Martin Riggs",
+        "dateOfBirth": "1979-01-30",
+        "ssn": "300179-77A",
+        "gender": "male",
+        "occupation": "Cop"
+    },
+    {
+        "id": "d27736ec-f723-11e9-8f0b-362b9e155667",
+        "name": "Hans Gruber",
+        "dateOfBirth": "1970-04-25",
+        "ssn": "250470-555L",
+        "gender": "other",
+        "occupation": "Technician"
+    },
+    {
+        "id": "d2773822-f723-11e9-8f0b-362b9e155667",
+        "name": "Dana Scully",
+        "dateOfBirth": "1974-01-05",
+        "ssn": "050174-432N",
+        "gender": "female",
+        "occupation": "Forensic Pathologist"
+    },
+    {
+        "id": "d2773c6e-f723-11e9-8f0b-362b9e155667",
+        "name": "Matti Luukkainen",
+        "dateOfBirth": "1971-04-09",
+        "ssn": "090471-8890",
+        "gender": "male",
+        "occupation": "Digital evangelist"
+    }
+
+    src/
+├── data/
+│   ├── diagnoses.ts
+│   ├── patients.ts      // Datos precargados de pacientes
+├── routes/
+│   ├── diagnoses.ts
+│   ├── patients.ts      // Ruta para /api/patients
+├── services/
+│   ├── diagnoseService.ts
+│   ├── patientService.ts // Servicio para manejar pacientes
+├── types.ts             // Tipos compartidos
+
+
+Después de crear el endpoint, asegúrate de que el frontend muestre la lista de pacientes:
+
+INSTALAR npm install cors
+    npm install cors
+
+    npm install --save-dev @types/cors
+
+PARA EVITAR ERROR DESDE EL FRONT :
+
+Ejercicios 9.12.-9.13.
+9.12: Patientor backend, paso 5
+Cree un endpoint POST /api/patients para agregar pacientes. Asegúrate de que también puedas agregar pacientes desde el frontend. Puedes crear ids únicos de tipo string usando la librería uuid:
+
+import { v1 as uuid } from 'uuid'
+const id = uuid()copy
+9.13: Patientor backend, paso 6
+Configura parsing seguro, validación y predicado de tipos en la solicitud POST /api/patients.
+
+Refactoriza el campo gender para usar un tipo enum.
+
+Instalamos el gererador ids
+    npm install uuid
+    npm install --save-dev @types/uuid
+
+
+

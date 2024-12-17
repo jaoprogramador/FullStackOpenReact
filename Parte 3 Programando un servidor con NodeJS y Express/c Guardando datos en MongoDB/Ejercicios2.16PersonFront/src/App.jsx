@@ -24,11 +24,14 @@ const App = () => {
     personService
       .getAll()
       .then(initialPerson => {
-        setPersons(initialPerson)
-      })
+        console.log('Datos recibidos:', initialPerson); 
+        setPersons(Array.isArray(initialPerson) ? initialPerson : []); // Asegura que sea un array
+        
+      })  
       .catch(error => {
         console.error('Error al obtener las personas:', error);
       });
+      
   }, [])
 
   const toggleImportanceOf = id => {
@@ -67,7 +70,7 @@ const App = () => {
   // Función para agregar o actualizar una persona
   const addPerson = (event) => {
     event.preventDefault();
-  
+    
     const existingPerson = persons.find(person => person.name === newName);
   
     if (existingPerson) {
@@ -79,15 +82,15 @@ const App = () => {
         const updatedPerson = { ...existingPerson, tlf: newTlf };
   
         personService
-          .update(existingPerson.id, updatedPerson)
+          .update(existingPerson.id, updatedPerson)  // Usa el campo _id de MongoDB
           .then(returnedPerson => {
             setPersons(persons.map(person =>
               person.id !== existingPerson.id ? person : returnedPerson
             ));
-            
+  
             // Mostrar mensaje de éxito
             setErrorMessage(`Updated ${newName}'s number successfully`);
-            setErrorType('success'); // Tipo de mensaje: éxito
+            setErrorType('success');
             setTimeout(() => {
               setErrorMessage(null);
             }, 5000);
@@ -98,8 +101,8 @@ const App = () => {
           .catch(error => {
             // Mostrar mensaje de error si la persona ya no existe
             setErrorMessage(`Information of ${newName} has already been removed from server`);
-            setErrorType('error'); // Tipo de mensaje: error
-            setPersons(persons.filter(p => p.id !== existingPerson.id)); // Remover la persona del estado
+            setErrorType('error');
+            setPersons(persons.filter(p => p.id !== existingPerson.id));  // Remover la persona del estado
             setTimeout(() => {
               setErrorMessage(null);
             }, 5000);
@@ -113,7 +116,7 @@ const App = () => {
         .then(returnedPerson => {
           setPersons(persons.concat(returnedPerson));
           setErrorMessage(`Added ${newName} successfully`);
-          setErrorType('success'); // Tipo de mensaje: éxito
+          setErrorType('success');
           setTimeout(() => {
             setErrorMessage(null);
           }, 5000);
@@ -134,6 +137,7 @@ const App = () => {
   const filteredPersons = persons.filter(person =>
     person.name.toLowerCase().includes(searchTerm.toLowerCase())
   )
+  console.log(filteredPersons);
 
   return (
     <div>

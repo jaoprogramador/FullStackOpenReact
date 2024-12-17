@@ -1,0 +1,35 @@
+EXTENSIONES VISUAL STURDIO CODE
+=================================
+
+console ninja
+eslint
+IMAGE PREVIEW
+LIVE PREVIEW
+MARCKDOWN ALL INONE 
+ERROR LENS
+Tailwind CSS IntelliSense
+Template String Converter
+Version Lens
+Pretty TypeScript Errors
+
+COMANDOS NODE
+===============
+NPM RUN DEV
+npm install json-server --save-dev --------------------instala json server. podemos poner un json y leerlo
+				"scripts": {
+  					"server": "json-server -p3001 --watch db.json",
+ 					 // ...
+					}
+PRUEBAS TEST(5): unitarias E2E(Extremo a Extremo, de back a front), Selenium, librerías Cypress, y Playwright
+=============
+npm init
+npm init playwright@latest
+Ejecutar pruebas:
+npm run test:report
+npm run test -- --ui
+PARA PROBAR ESTO C:\Users\user\Documents\Juan PC guillermo SpringAngularAWS\JAO\fullstackopen REACT\Parte 5 Probando aplicaciones React\d Pruebas de extremo a extremo Playwright
+TENEMOS QUE ARRANCAR EL BACK Y EL FRONT DE C:\Users\user\Documents\Juan PC guillermo SpringAngularAWS\JAO\fullstackopen REACT\Parte 5 Probando aplicaciones React\c Probando aplicaciones React CON NPM RUN DEV 
+ARRANCAR EL C:\Users\user\Documents\Juan PC guillermo SpringAngularAWS\JAO\fullstackopen REACT\Parte 5 Probando aplicaciones React\d Pruebas de extremo a extremo Playwright\EjerciciosE2E Y HACER:
+	npm run test:report
+	npm run test -- --ui
+ 

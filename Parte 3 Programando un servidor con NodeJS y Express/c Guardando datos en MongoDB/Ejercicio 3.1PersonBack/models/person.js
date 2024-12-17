@@ -8,7 +8,7 @@ console.log('connecting to', url)
 
 mongoose.connect(url)
   .then(result => {
-    console.log('connected to MongoDB')
+    console.log('connected to MongoDB::person.js')
   })
   .catch(error => {
     console.log('error connecting to MongoDB:', error.message)
@@ -17,6 +17,7 @@ mongoose.connect(url)
 const personSchema = new mongoose.Schema({
   name: String,
   tlf: String,
+  id: String
 })
 
 personSchema.set('toJSON', {

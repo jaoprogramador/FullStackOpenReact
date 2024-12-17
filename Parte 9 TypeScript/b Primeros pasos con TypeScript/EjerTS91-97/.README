@@ -1,0 +1,119 @@
+Ejercicios 9.1-9.3
+crear un servicio con Node Exprss que permite pasar por URL dos parametros y te dice si tienes sobrepeso
+9.2 Calculadora de ejercicio
+Crea el código de este ejercicio en el archivo exerciseCalculator.ts
+
+Escribe una función calculateExercises que calcule el tiempo promedio de las horas diarias de ejercicio y lo compare con la cantidad objetivo de horas diarias y devuelva un objeto que incluya los siguientes valores:
+
+el número de días
+el número de días de entrenamiento
+el valor objetivo original
+el tiempo promedio calculado
+valor booleano que describe si se alcanzó el objetivo
+una calificación entre los números 1-3 que indica qué tan bien se cumplen las horas. Puedes decidir la métrica por tu cuenta.
+un valor de texto que explique la calificación, puedes inventar las explicaciones
+
+9.3 Línea de comando
+Cambia los ejercicios anteriores para que puedas dar los parámetros de bmiCalculator y exerciseCalculator como argumentos de línea de comando.
+
+Tu programa podría funcionar, por ejemplo. de la siguiente manera:
+
+$ npm run calculateBmi 180 91
+
+Overweightcopy
+y:
+
+$ npm run calculateExercises 2 1 0 2 4.5 0 3 1 0 4
+
+{ periodLength: 9,
+  trainingDays: 6,
+  success: false,
+  rating: 2,
+  ratingDescription: 'not too bad but could be better',
+  target: 2,
+  average: 1.7222222222222223
+}copy
+En el ejemplo, el primer argumento es el valor objetivo.
+
+Maneja las excepciones y los errores de manera adecuada. exerciseCalculator debe aceptar entradas de diferentes longitudes. Determina tú mismo cómo recopilar toda la información necesaria.
+
+Un par de cosas para tener en cuenta:
+
+Si defines las funciones en otros módulos, deberías utilizar el Sistema de módulos de Javascript, el cual, es el mismo que hemos utilizado con React cuando la importación es realizada con
+
+import { isNotNumber } from "./utils";copy
+y la exportación
+
+export const isNotNumber = (argument: any): boolean =>
+  isNaN(Number(argument));
+
+default export "this is the default..."copy
+Otra nota: sorprendentemente, por algún motivo TypeScript no permite definir la misma variable en muchos archivos en el "scope de bloque", o sea, fuera de funciones (o clases):
+
+vs code mostrando error no se puede re-declarar block-scoped variable x
+En realidad esto no es del todo cierto. Esta regla solamente aplica a archivos que son tratados como "scripts". Un archivo es un script si no contiene ninguna declaración de exportación o importación. Si un archivo las posee, entonces el archivo es tratado como un modulo, y las variables no son definidas en el scope de bloque
+
+
+EJECUCIONES POR TERMINAL:
+    npm run calculateBmi 180 91
+    npm run calculateExercises 2 1 0 2 4.5 0 3 1 0 4
+
+
+9.4 Express
+Agrega Express a tus dependencias y crea un endpoint HTTP GET hello que responda 'Hello Full Stack!'
+
+La aplicación web debe iniciarse con los comandos npm start en modo de producción y con npm run dev en modo de desarrollo, este último debe usar ts-node-dev para ejecutar la aplicación.
+
+Reemplaza también tu archivo tsconfig.json existente con el siguiente contenido:
+
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "strictBindCallApply": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "esModuleInterop": true,
+    "declaration": true,
+  }
+}copy
+¡Asegúrate de que no haya errores!
+
+
+INSTALAR 
+    npm install express
+    npm install --save-dev ts-node-dev @types/express
+
+CONFIGURAR PACKAGE.JSCON
+"scripts": {
+    "start": "tsc && node dist/server.js",  // Modo producción
+    "dev": "ts-node-dev --respawn --transpileOnly server.ts"
+    /* "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node-dev --respawn server.ts",
+    "calculateBmi": "ts-node bmiCalculator.ts",
+    "calculateExercises": "ts-node exerciseCalculator.ts" */
+  },
+
+
+  9.5 WebBMI
+Agrega un endpoint para la calculadora de IMC que se pueda usar haciendo una solicitud HTTP GET al endpoint bmi y especificando el input con query string parameters. Por ejemplo, para obtener el IMC de una persona que tiene una altura de 180 y un peso de 72, la URL es http://localhost:3002/bmi?height=180&weight=72
+
+La respuesta es un json con este formato:
+
+{
+  weight: 72,
+  height: 180,
+  bmi: "Normal (healthy weight)"
+}copy
+Consulta la documentación de Express para obtener información sobre cómo acceder a los parámetros de consulta.
+
+Si los parámetros de consulta de la solicitud son del tipo incorrecto o faltan, se proporciona una respuesta con el código de estado y el mensaje de error adecuados:
+
+{
+  error: "malformatted parameters"
+}copy
+No copies el código de la calculadora en el archivo index.ts, conviértelo en un módulo de Typescript que se pueda importar en index.ts.

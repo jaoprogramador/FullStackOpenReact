@@ -1,0 +1,5 @@
+Ejercicio que contiene un back end con tres puntos de entrada
+http://localhost:3000/api/patients
+http://localhost:3000/api/diaries
+http://localhost:3000/api/patients
+desde el front se le llama y se le permite hacer un alta patience y ver el listado de los pacientes

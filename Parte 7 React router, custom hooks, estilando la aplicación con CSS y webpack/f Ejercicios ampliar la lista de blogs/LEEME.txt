@@ -1,0 +1,4 @@
+Aplicación que nos permite logarlos y acceder a una pantalla que nos permite cerrar sesión y crear blogs y se listan. Podemos cerrar sesión y volver a la pantalla de inicio. Consultar los blogs de un usuario concreto, crear comentarios, dar likes y borrar. Se ha aplicado estilos y un navBar
+login jaoprogramador
+pass 12345
+

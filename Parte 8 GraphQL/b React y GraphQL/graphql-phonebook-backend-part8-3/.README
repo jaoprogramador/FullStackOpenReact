@@ -1,0 +1,7 @@
+HECAMEMOS UN A PETICION POSTMAN
+http://localhost:4000/graphql
+CON BODY-JSON:
+{
+"query": "query {allPersons {name}}"
+
+}

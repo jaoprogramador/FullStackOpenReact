@@ -1,0 +1,12 @@
+npm install --location=global ts-node typescript
+npm install --save-dev ts-node typescript
+npm run ts-node file.ts -- -s --someoption
+npm install --save-dev @types/react @types/express @types/lodash @types/jest @types/mongoose
+npm install --save-dev @types/node
+
+npm run multiply 5 2
+npm run multiply 5 lol
+
+npm install express
+npm install --save-dev @types/express
+npm install --save-dev ts-node-dev

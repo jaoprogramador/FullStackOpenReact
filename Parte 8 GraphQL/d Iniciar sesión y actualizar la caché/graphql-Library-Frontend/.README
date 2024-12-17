@@ -1,0 +1,30 @@
+Pues he añadido los componentes y he ajustado el app.js .
+Me da error al logarme y no funciona el books
+8.17 Listado de libros
+Después de que el backend cambia, la lista de libros ya no funciona. Arreglalo.
+
+8.18 Iniciar sesión
+Agregar libros nuevos y cambiar el año de nacimiento de un autor no funcionan porque requieren que el usuario inicie sesión.
+
+Aún no es necesario manejar los errores de validación.
+
+Puede decidir cómo se verá el inicio de sesión en la interfaz de usuario. Una posible solución es convertir el formulario de inicio de sesión en una vista separada a la que se puede acceder a través de un menú de navegación
+
+8.19 Libros por género, parte 1
+Complete su solicitud para filtrar la lista de libros por género. Su solución podría verse así:
+
+8.20 Libros por género, parte 2
+Implemente una vista que muestre todos los libros según el género favorito del usuario que haya iniciado sesión.
+
+8.21 libros por género con GraphQL
+En los dos ejercicios anteriores, el filtrado se podría haber hecho usando solo React. Para completar este ejercicio, debe volver a realizar el filtrado de los libros según un género seleccionado (que se realizó en el ejercicio 8.19) usando una consulta GraphQL al servidor. Si ya lo hizo, no tiene que hacer nada.
+
+Este y los siguientes ejercicios son bastante desafiantes como debería ser a esta altura del curso. Es posible que desee completar primero los más fáciles en la
+
+El vinculo que sigue más abajo esta roto, por favor revisar...
+[siguiente parte](/es/part8/fragments_and_subscriptions)
+
+8.22 Caché actualizado y recomendaciones de libros
+Si ya realizó el ejercicio anterior, es decir, buscar los libros en un género con GraphQL, asegúrese de alguna manera de que la vista de libros se mantenga actualizada. Por lo tanto, cuando se agrega un nuevo libro, la vista de libros se actualiza al menos cuando se presiona un botón de selección de género.
+
+Cuando no se realiza la selección de un nuevo género, no es necesario actualizar la vista.

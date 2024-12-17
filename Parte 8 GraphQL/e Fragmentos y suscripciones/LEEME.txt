@@ -1,0 +1,2 @@
+dependencias para subscripciones
+	npm install @apollo/client subscriptions-transport-ws

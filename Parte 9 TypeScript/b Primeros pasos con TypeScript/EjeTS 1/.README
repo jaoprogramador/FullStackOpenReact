@@ -1,0 +1,6 @@
+Para Ejercutar 
+ run ts-node -- multiplier.ts
+npm run multiply 5 2
+npm install --save-dev @types/react @types/express @types/lodash @types/jest @types/mongoose
+
+npm install --save-dev @types/node

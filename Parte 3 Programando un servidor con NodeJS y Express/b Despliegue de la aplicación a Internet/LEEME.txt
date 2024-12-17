@@ -24,18 +24,27 @@ Nos dará esta URL, donde veremos la url que se ve el fron que onecta con nuestr
 APPs en render de notas y agend
 
 ========================
+https://jaoportfolio.onrender.com/
+https://shoppingcard-1ry4.onrender.com/
+https://twitterfollow.onrender.com/
 	https://react-xhzi.onrender.com/
 	https://reactpersons.onrender.com/
+	https://persosmongodb.onrender.com/
 	
 El api rest esta en 
 ============
 	https://react-xhzi.onrender.com/api/notes
 	https://reactpersons.onrender.com/api/persons
+	https://persosmongodb.onrender.com/api/personsMG
+Angular 
+========
+https://proyecto-final-angular-42db4.web.app/login
 	
 REPO GitHub
 ==========
 https://github.com/jaoprogramador/reactPersons/
 https://github.com/jaoprogramador/react    ---NOTES
+https://github.com/jaoprogramador/PersosMongoDB/
 
 Workspace local
 ============
@@ -72,8 +81,13 @@ node mongo.js eBQlFg3kNN2M0pbL Anna 040-1234556
 node mongo.js eBQlFg3kNN2M0pbL Arto Vihavainen  045-122456
 node mongo.js eBQlFg3kNN2M0pbL Ada Lovelace  040-123-236
 node mongo.js eBQlFg3kNN2M0pbL Marvin Panzar 040-3333444
+node mongo.js eBQlFg3kNN2M0pbL Criss Browns 040-3333499
+node mongo.js eBQlFg3kNN2M0pbL Alex Reyes 040-3333488
 
-Anna 040-1234556
+node mongo.js eBQlFg3kNN2M0pbL "Carlos Abad" "040-3333488"
+
+
+Comiteamos el ejercicio de api back con front embebido y con conexion a mongo. Desde Render importamos el proyecto de github y deployamos con las variables de entorno creadas en .env
 
 
 
@@ -106,5 +120,343 @@ Portafolio
 	git add .
 	git commit -a -m "Error tlf no muestra"
 	--git remote add origin https://github.com/jaoprogramador/reactPersons SOLO UNA VEZ
+                                	
+	git remote add origin https://github.com/jaoprogramador/FullStackOpenReact.git
 	git push -u origin main
 	git status
+	
+	propuesta github
+	===========
+	echo "# PersosMongoDB" >> README.md
+		git init
+		git add README.md
+		git commit -m "first commit"
+		git branch -M main
+		git remote add origin https://github.com/jaoprogramador/PersosMongoDB.git
+		git push -u origin main
+		…or push an existing repository from the command line
+		git remote add origin https://github.com/jaoprogramador/PersosMongoDB.git
+		git branch -M main
+		git push -u origin main
+
+		Para salir del editor de Git que estás viendo (probablemente vim), sigue estos pasos:
+
+		Presiona Esc para asegurarte de que estás en el modo de comando.
+		Escribe :wq (para guardar y salir) o :q! (para salir sin guardar) y luego presiona Enter.
+		Esto debería cerrar el editor y permitir que continúes con tus comandos de Git.
+
+========================================================
+========================================================
+
+	he ñapeado la aplicación parahasta la propuesta de ejercicios de la parte 4
+========================================================
+========================================================
+
+
+
+	
+	COOMANDOS Node
+	==============
+	npm run dev ARRANCAR LA APLICACION
+	npx kill-port 3001           CUANDO NO ARRANCA LA APLICACION XQ EL PUERTO ESTÁ EN USO (Error: listen EADDRINUSE: address already in use :::3001)
+	
+	
+	
+	node mongo.js eBQlFg3kNN2M0pbL Criss Browns 040-3333499
+	
+	
+
+	
+	
+	
+	PLANING PORTFOLIO   git remote add origin https://github.com/jaoprogramador/jaoPortfolio
+	============== main
+	===============
+	subir ejercicio de carrito OK	
+	subir hola mundo  OK
+	añadir a portfolio OK
+	subir portfolio OK
+	error en los enlaces OK
+	continuar parte 4, refactorizar los blog del back end con la estructura, crear los tests OK
+	Probar test ENDDING
+	
+	COMENTARIOS EN REACT\
+	==================
+	/* Esto es un comentario
+  de varias líneas */
+  
+  HTML {/* Esto es un comentario en el render */}
+  ============================================================================
+  
+  
+  const blogsRouter = require('express').Router()
+const Blog = require('../models/blog')
+const jwt = require('jsonwebtoken')
+const User = require('../models/user')
+
+
+//API ADD
+//===========
+blogsRouter.post('/', async (request, response, next) => {
+  const { title, author, url, likes } = request.body;
+
+  // Verificamos el token
+  const token = request.token; // Asegúrate de que el token se extraiga correctamente en el middleware
+  const decodedToken = jwt.verify(token, process.env.SECRET);
+
+  if (!decodedToken.id) {
+    return response.status(401).json({ error: 'token missing or invalid' });
+  }
+
+  // Buscamos al usuario autenticado que está haciendo la petición
+  const user = await User.findById(decodedToken.id);
+
+  // Creamos el nuevo blog asociado al usuario autenticado
+  const blog = new Blog({
+    title,
+    author,
+    url,
+    likes,
+    user: user._id // Asociamos el blog al usuario
+  });
+
+  try {
+    const savedBlog = await blog.save();
+
+    // Agregamos el blog recién creado a la lista de blogs del usuario
+    user.blogs = user.blogs.concat(savedBlog._id);
+    await user.save();
+
+    response.status(201).json(savedBlog);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+//API DELETEBYID
+//===============
+
+blogsRouter.delete('/:id', async (request, response) => {
+  const token = getTokenFrom(request);
+  const decodedToken = jwt.verify(token, process.env.SECRET);
+  if (!decodedToken.id) {
+    return response.status(401).json({ error: 'token missing or invalid' });
+  }
+
+  const blog = await Blog.findById(request.params.id);
+
+  if (blog.user.toString() !== decodedToken.id.toString()) {
+    return response.status(401).json({ error: 'only the creator can delete a blog' });
+  }
+
+  await Blog.findByIdAndRemove(request.params.id);
+  response.status(204).end();
+});
+
+//API UPDATE
+//===========
+
+blogsRouter.put('/:id', async (request, response) => {
+  const body = request.body;
+
+  const blog = {
+    title: body.title,
+    author: body.author,
+    url: body.url,
+    likes: body.likes,
+  };
+
+  const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true });
+  response.json(updatedBlog);
+});
+
+  
+  POST http://localhost:3003/api/blogs
+  {
+  "title": "Aprendiendo Node.js",
+  "author": "Juan Programador",
+  "url": "https://aprendiendo-nodejs.com",
+  "likes": 25,
+  "user": {
+    "username": "jaoprogramador",
+    "name": "Juan arana",
+    "id": "670d2c5d962231d3c7146ae0"
+  },
+  "id": "670d2c5d962231d3c7146ae0"
+}
+  
+  
+  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imphb3Byb2dyYW1hZG9yIiwiaWQiOiI2NzBkMmM1ZDk2MjIzMWQzYzcxNDZhZTAiLCJpYXQiOjE3Mjg5ODM0NDksImV4cCI6MTcyODk4NzA0OX0.DZb3CLnQhEkXrzJQ2IkMhIOD9HsPh5mjpqtiBsB2lto
+  
+  
+  AxiosError: Network Error
+    at XMLHttpRequest.handleError (http://localhost:5173/node_modules/.vite/deps/axios.js?v=d66a00ff:1623:14)
+    at Axios.request (http://localhost:5173/node_modules/.vite/deps/axios.js?v=d66a00ff:2145:41)
+    at async Object.create (http://localhost:5173/src/services/blogs.js:26:22)
+    at async createBlog (http://localhost:5173/src/App.jsx?t=1729443431731:123:27)
+	
+	
+	useefffect separados
+	
+	
+	IR CREANDO CARPETA DE DOCUMENTACION---------------OK
+	AJUSTAR CURRICULUM CON VL-------------------------------OK
+	RELLENAR COMPROMISO
+	REVISAR SI VEO LO DE INDRA ALFRESCO
+	PREPARAR ENTREVISTA
+	SEGUIR CURSO FULLSTACT
+	APRENDER MINIMOS POWER bi, Y TEMAS DE DATA
+	
+	
+	Me faltan los de REDES, SCRUM, Alfresco
+	
+	
+	
+	BILBOMATICA                             28.10.2022   20.10.2023
+	SOFTWARE Y MAINTENANCE        02.05.2019   19.10.2022    Analista Funcional
+	AYESA IBERMATICA                   16.04.2018    15.02.2019 
+	SELTIME                                    09.05.2017   12.04.2018
+	INDRA                                      06.07.2015    08.02.2017
+	
+	BALIDEA                                   27.10.2014   26.04.2015 BBVA
+	ZYLK.NET                                  10.12.2009   21.02.2010
+	NAHITEK DIGITAL                     16.01.2008   04.03.2009
+	INETUM NORTE                         06.03.2007  03.12.2007 
+	SERIKAT                                  27.02.2006   31.08.2006     Programador
+	
+	Metodología AGILE: SM al principio
+	=======================
+		Entregas incrementales y continuas
+		Adaptación al cambio
+		Enfoque en la colaboración:
+		Enfoque en la colaboración:
+	
+	Metodologia KANVAN: SM con AZAOLA
+	============================
+		Se centra en la visualización del flujo de trabajo mediante un tablero, para gestionar tareas y evitar cuellos de botella.
+	
+	Metodologia SCRUM: EJIE con ALEX
+	========================
+		Organiza el trabajo en sprints y roles específicos (como Product Owner, Scrum Master y el equipo de desarrollo).
+	
+	Metodologia KANVAN: EJIE con ITZIAR
+	============================
+		Se centra en la visualización del flujo de trabajo mediante un tablero, para gestionar tareas y evitar cuellos de botella. 
+		
+		
+	APP REACT RENDER-NAVEGACION-USUARIOS-BLOGS
+	=====================================
+	HE CREADO ESTE WORKSPACE 
+		C:\Users\user\Documents\Juan PC guillermo SpringAngularAWS\JAO\reactWorkspace\projects\MongoUserBlogsStilosMenuVar\NotesBACKMongo
+	HE CREADO ESTE REPO
+		https://github.com/jaoprogramador/MongoUserBlogsStilosMenuVar
+	LO HE DEPLOYADO EN RENDER
+		https://mongouserblogsstilosmenuvar.onrender.com/
+	La BD DE MONGO ESTA EN 
+		mongodb+srv://jaoprogramador:eBQlFg3kNN2M0pbL@cluster0.pxu2t.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+	COINCIDE CON EL PROYECTO DE LOGIN BLOGS-USERS STILOS MENUBAR MONGODB
+		Crear Usuarios
+		==============
+		https://mongouserblogsstilosmenuvar.onrender.com/api/users
+		
+		{
+			"username": "jaoprogramador",
+			"name": "Juantxu Arana Olalde",
+			"password": "12345"
+		}
+		
+		{
+			"username": "robinfood",
+			"name": "David de Jorge",
+			"password": "robinfood"
+		}
+		{
+			"username": "javisalgado",
+			"name": "Javier Salgado",
+			"password": "javisalgado"
+		}
+		
+		
+		
+		React router, Redux, CSS, Bootstrap
+		========================
+		GraphQL: alternativa de facebook a servicios REST.
+		=======
+		
+		recuerda que te dijo jone: vamos a ir , tu vas a venir?
+		Sheila te hizo señales de ATACA
+		
+		
+		
+		EJERCICIO SI SUBIR AL PORTFOLIO: GraphQL desde FRONT ejercicios CRUD
+		===================================================
+			C:\Users\user\Documents\Juan PC guillermo SpringAngularAWS\JAO\fullstackopen REACT\Parte 8 GraphQL\b React y GraphQL\graphql-phonebook-backend-part8-3
+			C:\Users\user\Documents\Juan PC guillermo SpringAngularAWS\JAO\fullstackopen REACT\Parte 8 GraphQL\b React y GraphQL\library-frontend-main
+			
+			C:\Users\user\Documents\Juan PC guillermo SpringAngularAWS\JAO\fullstackopen REACT\Parte 8 GraphQL\c Administración de bases de datos y usuarios\graphql-phonebook-BACK\models\User.js
+			jaoprogramador
+			QuJDcyCyEDGquupK
+			mongodb+srv://jaoprogramador:QuJDcyCyEDGquupK@graphql-library.hjxot.mongodb.net/?retryWrites=true&w=majority&appName=graphql-library
+			
+			EL EJERCICIO DE SUBSCRIPCIONES NO ME HA FUNCIONADO
+			========================================
+			C:\Users\user\Documents\Juan PC guillermo SpringAngularAWS\JAO\fullstackopen REACT\Parte 8 GraphQL\e Fragmentos y suscripciones
+			EJERCICIO DE TYPESCRIPT QUE GESTIONA ALTAS DE UN HOSPITAL compilar front en back despues de cambiar las rutas localhost
+			=============================================
+			C:\Users\user\Documents\Juan PC guillermo SpringAngularAWS\JAO\fullstackopen REACT\Parte 9 TypeScript\e Grande finale Patientor
+			
+			
+			LOCAL C:\Users\user\Documents\Juan PC guillermo SpringAngularAWS\JAO\reactWorkspace\projects\graphql\graphql-Library-BACK
+			REPO https://github.com/jaoprogramador/JAOReactGraphql
+			API PROD https://jaoreactgraphql.onrender.com
+			
+			EJERCICIO GRAPQL
+			==============
+			LOCAL C:\Users\user\Documents\Juan PC guillermo SpringAngularAWS\JAO\reactWorkspace\projects\graphql\graphql-Library-Frontend
+			REPO			
+					https://github.com/jaoprogramador/JAOReactGraphql/
+					https://github.com/jaoprogramador/JAOReactGraphqlFRONT
+			API PROD https://jaoreactgraphqlfront.onrender.com/
+		=========================================================================================	
+			ANGULAR material drag and drop
+			LOCAL C:\Users\user\Documents\Juan PC guillermo SpringAngularAWS\WORKSPACES\angularWorkspace\04EJANGULARMATERIAL
+			REPO https://github.com/jaoprogramador/angular-apps/tree/master/04EJANGULARMATERIAL
+			API PROD https://angular-material-ut7i.onrender.com/
+			
+			ANGULAR CARGA PEREZOSA
+			LOCAL C:\Users\user\Documents\Juan PC guillermo SpringAngularAWS\WORKSPACES\angularWorkspace\04ngModules
+			REPO https://github.com/jaoprogramador/angular-apps/tree/master/04ngModules
+			API PROD https://angular-cargaperezosamodulos.onrender.com/
+			
+			ANGULAR WORKSAPPCE DE PROYECTOS------------------------------ carga perezosa de workspace de proyectos
+
+			LOCAL C:\Users\user\Documents\Juan PC guillermo SpringAngularAWS\WORKSPACES\angularWorkspace\05ngWorkpsace
+			REPO https://github.com/jaoprogramador/angular-apps/tree/master/05ngWorkpsace
+			API PROD https://angular-workspaceproyectos.onrender.com/auth/login
+			
+			
+			Root DirectoryOptional nomappenrepo
+			BUILD COMAND npm install && npx ng build --configuration production
+			PUBLISH DIRECTORY dist/04-ejangularmaterial/browser
+			
+
+INSTALAR Express	
+	npm install express
+	npm install --save-dev @types/express			
+	npm install --save-dev ts-node-dev
+	
+	npm init -y
+	npm install typescript --save-dev
+	
+	 "scripts": {
+		"tsc": "tsc",
+		},
+		
+		npm run tsc -- --init
+		
+		npm install express
+		npm install --save-dev eslint @types/express @typescript-eslint/eslint-plugin @typescript-eslint/parser
+		npm install --save-dev ts-node-dev
+		

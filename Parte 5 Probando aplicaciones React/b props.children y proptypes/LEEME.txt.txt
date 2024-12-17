@@ -1,0 +1,7 @@
+Ejercicio Resuelto
+https://github.com/fullstack-hy2020/part2-notes-frontend/tree/part5-5
+
+Los ejercicios son:
+BlogsBACKMongo
+BlogsFRONT
+

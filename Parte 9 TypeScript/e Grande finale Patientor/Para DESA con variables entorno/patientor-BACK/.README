@@ -1,0 +1,47 @@
+9.20: Patientor, paso 1
+Crea un endpoint /api/patients/:id en el backend que devuelva toda la información del paciente para un paciente, incluyendo el array de entradas de pacientes que todavía está vacío para todos los pacientes. Por el momento, expande los tipos del backend de la siguiente manera:
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface Entry {
+}
+
+export interface Patient {
+  id: string;
+  name: string;
+  ssn: string;
+  occupation: string;
+  gender: Gender;
+  dateOfBirth: string;
+  entries: Entry[]
+}
+
+export type NonSensitivePatient = Omit<Patient, 'ssn' | 'entries'>;
+copy
+La respuesta debe tener el siguiente aspecto:
+
+
+
+http://localhost:3001/api/patients/d2773822-f723-11e9-8f0b-362b9e155667
+
+9.21: Patientor, paso 2
+Crea una página para mostrar la información completa de un paciente en el frontend.
+
+El usuario debe poder acceder a la información de un paciente haciendo click en el nombre del paciente.
+
+Obtén los datos del endpoint creado en el ejercicio anterior.
+
+Puedes usar MaterialUI para los nuevos componentes pero eso depende de ti ya que ahora nuestro enfoque principal es TypeScript.
+
+Es posible que quieras echarle un vistazo a la parte 7 si aún no comprendes cómo funciona React Router.
+
+El resultado podría verse así:
+
+navegador mostrando patientor con un paciente
+El ejemplo usa Material UI Icons para representar los géneros.
+
+9.22: Patientor, paso 3
+Define los tipos OccupationalHealthCareEntry y HospitalEntry para que se ajusten a los nuevos datos de ejemplo. Asegúrese de que su backend devuelva las entradas correctamente cuando vaya a la ruta de un paciente individual
+
+navegador mostrando los datos de las entradas apropiadamente para el paciente
+¡Utiliza los tipos correctamente en el backend! Por ahora, no es necesario hacer una validación adecuada para todos los campos de las entradas en el backend, es suficiente, por ejemplo, comprobar que campo type tiene un valor correcto.
+

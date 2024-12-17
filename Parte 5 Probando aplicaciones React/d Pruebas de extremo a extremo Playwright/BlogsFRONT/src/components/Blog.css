@@ -1,0 +1,26 @@
+/* Blog.css */
+.blog {
+    border: 1px solid #ccc;
+    padding: 1em;
+    margin-bottom: 1em;
+  }
+  
+  .blog-title {
+    font-size: 1.5em;
+    margin: 0;
+  }
+  
+  .blog-author {
+    font-size: 1em;
+    color: #666;
+  }
+  
+  .blog-url {
+    color: blue;
+    text-decoration: underline;
+  }
+  
+  .blog-likes {
+    font-size: 0.9em;
+    color: #333;
+  }

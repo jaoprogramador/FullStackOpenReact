@@ -57,3 +57,16 @@
 
 # En los siguientes ejercicios, escribe todo el código específico de Mongoose en su propio módulo, como hicimos en el capítulo Configuración de la base de datos en su propio módulo.
 
+# PersosMongoDB" 
+
+# 3.13: Base de datos de la Agenda Telefónica, paso 1
+# Cambia la búsqueda de todas las entradas de la agenda telefónica para que los datos se obtengan desde la base de datos.
+
+# Verifica que el frontend funcione después de que se hayan realizado los cambios.
+
+# En los siguientes ejercicios, escribe todo el código específico de Mongoose en su propio módulo, como hicimos en el capítulo Configuración de la base de datos en su propio módulo.
+
+# 3.14: Base de datos de la Agenda Telefónica, paso 2
+# Cambia el backend para que los nuevos números se guarden en la base de datos. Verifica que tu frontend aún funcione después de los cambios.
+
+# En esta etapa, puedes ignorar si ya existe una persona en la base de datos con el mismo nombre que la persona que estás agregando.

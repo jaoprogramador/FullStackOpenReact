@@ -1,0 +1,173 @@
+/* Ejercicios 8.1.-8.7
+A través de los ejercicios, implementaremos un backend GraphQL para una pequeña biblioteca. Comience con este archivo. ¡Recuerde npm init e instalar dependencias!
+
+Tenga en cuenta que el código no funciona inicialmente porque la definición del esquema no está completa.
+
+8.1: El número de libros y autores
+Implementar consultas bookCount y authorCount que devuelven el número de libros y el número de autores.
+
+La consulta
+
+query {
+  bookCount
+  authorCount
+}copy
+debe devolver
+
+{
+  "data": {
+    "bookCount": 7,
+    "authorCount": 5
+  }
+}
+
+8.2: Todos los libros
+Implementar la consulta allBooks, que devuelve los detalles de todos los libros.
+
+Al final, el usuario debería poder realizar la siguiente consulta:
+
+query {
+  allBooks { 
+    title 
+    author
+    published 
+    genres
+  }
+} 
+  
+8.3: Todos los autores
+Implementar la consulta allAuthors, que devuelve los detalles de todos autores. La respuesta debe incluir un campo bookCount que contenga el número de libros que ha escrito el autor.
+
+Por ejemplo, la consulta
+
+query {
+  allAuthors {
+    name
+    bookCount
+  }
+}copy
+debería devolver`
+
+{
+  "data": {
+    "allAuthors": [
+      {
+        "name": "Robert Martin",
+        "bookCount": 2
+      },
+      {
+        "name": "Martin Fowler",
+        "bookCount": 1
+      },
+      {
+        "name": "Fyodor Dostoevsky",
+        "bookCount": 2
+      },
+      {
+        "name": "Joshua Kerievsky",
+        "bookCount": 1
+      },
+      {
+        "name": "Sandi Metz",
+        "bookCount": 1
+      }
+    ]
+  }
+}
+  
+8.4: Libros de un autor
+Modifique la consulta allBooks para que un usuario pueda dar un parámetro opcional author. La respuesta debe incluir solo libros escritos por ese autor.
+
+Por ejemplo, la consulta
+
+query {
+  allBooks(author: "Robert Martin") {
+    title
+  }
+}copy
+debería devolver
+
+{
+  "data": {
+    "allBooks": [
+      {
+        "title": "Clean Code"
+      },
+      {
+        "title": "Agile software development"
+      }
+    ]
+  }
+}
+  
+8.5: Libros por género
+Modifique la consulta allBooks para que un usuario pueda dar un parámetro opcional genre. La respuesta debe incluir solo libros de ese género.
+
+Por ejemplo, la consulta
+
+query {
+  allBooks(genre: "refactoring") {
+    title
+    author
+  }
+}copy
+debería devolver
+
+{
+  "data": {
+    "allBooks": [
+      {
+        "title": "Clean Code",
+        "author": "Robert Martin"
+      },
+      {
+        "title": "Refactoring, edition 2",
+        "author": "Martin Fowler"
+      },
+      {
+        "title": "Refactoring to patterns",
+        "author": "Joshua Kerievsky"
+      },
+      {
+        "title": "Practical Object-Oriented Design, An Agile Primer Using Ruby",
+        "author": "Sandi Metz"
+      }
+    ]
+  }
+}copy
+La consulta debe funcionar cuando ambos parámetros opcionales son proporcionados:
+
+query {
+  allBooks(author: "Robert Martin", genre: "refactoring") {
+    title
+    author
+  }
+}
+
+8.7: Actualización del año de nacimiento de un autor
+Implemente la mutación editAuthor, que se puede usar para establecer un año de nacimiento para un autor. La mutación se usa así
+
+mutation {
+  editAuthor(name: "Reijo Mäki", setBornTo: 1958) {
+    name
+    born
+  }
+}copy
+Si se encuentra el autor correcto, la operación devuelve el autor editado:
+
+{
+  "data": {
+    "editAuthor": {
+      "name": "Reijo Mäki",
+      "born": 1958
+    }
+  }
+}copy
+Si el autor no está en el sistema, se devuelve null:
+
+{
+  "data": {
+    "editAuthor": null
+  }
+}
+*/

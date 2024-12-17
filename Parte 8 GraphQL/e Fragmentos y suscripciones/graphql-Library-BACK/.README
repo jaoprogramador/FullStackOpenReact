@@ -1,0 +1,7 @@
+8.23: Suscripciones - servidor
+Realiza una implementación de backend para la suscripción bookAdded,
+
+8.24: Suscripciones - cliente, parte 1
+Comience a usar suscripciones en el cliente y suscríbase a bookAdded. Cuando se agregan nuevos libros, notifique al usuario. Cualquier método funciona. Por ejemplo, puede utilizar la función window.alert.
+
+NO ME ESTA MOSTRANDO LAS ALERTAS DE LA SUBSCRIPCION NI TRAZAS

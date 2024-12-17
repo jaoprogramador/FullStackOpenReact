@@ -1,0 +1,3 @@
+HAy que arrancar el los dos proyectos a la vez 
+	ejgraphql
+	graphql-phonebook-backend-part8-3

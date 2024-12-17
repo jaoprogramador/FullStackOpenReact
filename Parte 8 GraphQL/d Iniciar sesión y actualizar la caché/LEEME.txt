@@ -1,0 +1,6 @@
+he creado personas y libros en mongo
+he creado un usuario jaoprogramador 12345
+hay que arrancar:
+	graphql-Library-Frontend
+	graphql-phonebook-BACK
+Aplicación con servicios graphql que nos permite hacer altas, modificaciones y loggin, busquedas… contra mongo

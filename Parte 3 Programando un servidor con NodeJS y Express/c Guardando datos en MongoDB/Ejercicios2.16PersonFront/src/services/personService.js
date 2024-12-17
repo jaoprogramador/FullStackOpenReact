@@ -1,6 +1,6 @@
 import axios from 'axios'
 //LOCAL
-//const baseUrl = 'http://localhost:3001/persons'
+//const baseUrl = 'http://localhost:3002/api/personsMG'
 //DESA
 const baseUrl = '/api/personsMG'
 const getAll = () => {

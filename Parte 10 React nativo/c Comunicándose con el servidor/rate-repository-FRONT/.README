@@ -1,0 +1,140 @@
+Vamos a Crear una aplicación nativa con un routing, formulario de formik
+validaciones simples, aplicar estilos
+
+npm start 
+expo start --web
+npm start --clear
+
+
+
+ENRUTAMIENTO
+    npm install react-router-native
+    =========ESTOS DOS AL FINAL NO LOS HE INSTALADO
+    npm install @expo/webpack-config --save-dev COMO DABA ERRORHE USADO:
+        por incompatibilidad de versiones de EXPO con WEBPACK
+
+        npm install @expo/webpack-config@18.0.0 --save-dev --legacy-peer-deps
+
+INSTALAMOS FORMIK PARA LOS FORMULARIOS
+    npm install formik
+INSTALAMOS PARA VALIDACIONES DE FORMS
+    npm install yup
+
+
+===================================================================================
+EJECUTAR ANTES EN BACK (rate-repository-api) npm run seed:run PARA CARGARGAR DATPOS
+===================================================================================
+CHEKEAR GRAPHQL http://localhost:4000/
+PETICION
+    {
+    users {
+        edges {
+        node {
+            username
+        }
+        }
+    }
+    }
+RESPUESTA
+{
+  "data": {
+    "users": {
+      "edges": [
+        {
+          "node": {
+            "username": "kalle"
+          }
+        },
+        {
+          "node": {
+            "username": "elina"
+          }
+        },
+        {
+          "node": {
+            "username": "matti"
+          }
+        },
+        {
+          "node": {
+            "username": "johndoe"
+          }
+        },
+        {
+          "node": {
+            "username": "leeroyjenkins"
+          }
+        }
+      ]
+    }
+  }
+}
+
+
+PETICION
+query {
+    repositories {
+      edges {
+        node {
+          id
+          name
+          ownerName
+          createdAt
+          fullName
+          reviewCount
+          ratingAverage
+          forksCount
+          stargazersCount
+          description
+          language
+          ownerAvatarUrl
+        }
+      }
+    }
+  }
+`;
+RESPUESTA
+    {
+  "data": {
+    "repositories": {
+      "edges": [
+        {
+          "node": {
+            "id": "jaredpalmer.formik",
+            "name": "formik",
+            "ownerName": "jaredpalmer",
+            "createdAt": 
+
+PETICION AUTENTICARSE
+mutation {
+  authenticate(credentials: { username: "kalle", password: "password" }) {
+    accessToken
+  }
+}
+
+RESPUESTA 
+{
+  "data": {
+    "authenticate": {
+      "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiYmU0Mjk4NC0wNTFiLTRhMDEtYjQ1ZC1iOGQyOWMzMjIwMGMiLCJpYXQiOjE3MzM4NDMxMDYsImV4cCI6MjMzODY0MzEwNiwic3ViIjoiYWNjZXNzVG9rZW4ifQ.Mr4_4Y0dAbiO0Ac9-smFcqaBKZOLVl1plS6eSNVq-7o"
+    }
+  }
+}
+
+PETICION ALTA
+mutation {
+  createUser(user: { username: "jaoprogramador", password: "12345" }) {
+    id
+    username
+  }
+}
+
+RESPUESTA 
+{
+  "data": {
+    "createUser": {
+      "id": "92c44d18-5e03-40f1-9ad2-63e71da4a6c3",
+      "username": "jaoprogramador"
+    }
+  }
+}

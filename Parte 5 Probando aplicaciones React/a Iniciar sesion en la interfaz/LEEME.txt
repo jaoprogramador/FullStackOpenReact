@@ -1,0 +1,8 @@
+1 arrancar primero BACK, NotesBACKMongo, npm run dev
+2 arrancar en otro VSCode Front: NotesFRONT, npm run dev
+3 checkear la url http://localhost:3003/api/notes
+4 checkear en el debugger si cargan bien las llamadas al API
+5 checkear que en el servide del front 
+		const baseUrl = 'http://localhost:3003/api/notes'//LOCALHOST
+		//const baseUrl = '/api/notes' //DESARROLLO
+6 ejecutamos la url del front http://localhost:5173/ y nos logamos con jaoprogramador 12345

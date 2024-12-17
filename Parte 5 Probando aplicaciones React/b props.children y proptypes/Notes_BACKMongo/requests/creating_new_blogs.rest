@@ -1,0 +1,15 @@
+# Crear un nuevo blog
+
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+    "title": "Nuevo Blog de Prueba",
+    "author": "Juan Pérez",
+    "url": "http://ejemplo.com/nuevo-blog-de-prueba",
+    "likes": 0
+}
+
+### Verificar que se ha creado el nuevo blog
+
+GET http://localhost:3003/api/blogs

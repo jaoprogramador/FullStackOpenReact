@@ -1,0 +1,14 @@
+Ejercicio que permite con con REDUX compartir estados comunes a los distintos componentes y 
+buscar anécdotas, listarlas y crearlas en un json
+Proyecto: redux-anecdotes-mainEj16-19
+	npm install json-server --save-dev
+
+	"scripts": {
+ 		 "server": "json-server -p3001 --watch db.json",
+  		// ...
+		}
+	npm install axios
+1.- json-serve --watch db.json --port 3001
+2.- npm run dev 
+
+Dependencias: 
