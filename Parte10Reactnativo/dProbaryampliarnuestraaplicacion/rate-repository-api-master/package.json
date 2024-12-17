@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node --loader ts-node/esm start.js", 
-    "start:dev": "nodemon --exec babel-node ./src/index.js", 
+    "start": "node start.js",   
+    "start:dev": "nodemon ./src/index.js", 
     "lint": "eslint ./src",
     "test": "jest .",
     "migrate:make": "knex migrate:make",
@@ -73,6 +73,6 @@
     "prettier": "^2.2.1"
   },
   "engines": {
-    "node": "14.x"
+    "node": "16.x" 
   }
 }
