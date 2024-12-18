@@ -1,0 +1,30 @@
+### Ejercicio 11.1: Calentando motores
+
+En un equipo de seis desarrolladores trabajando en una aplicación escrita en **Java** con un frontend desarrollado en **React** o **Angular**, es esencial implementar una configuración de CI/CD para garantizar la calidad y el despliegue eficiente de la aplicación.
+
+#### Pasos comunes de CI y herramientas específicas
+
+1. **Linting**: Para Java, herramientas como **Checkstyle**, **PMD**, o **SpotBugs** ayudan a mantener un código limpio y a detectar problemas de estilo o errores comunes. En el caso del frontend, herramientas como **ESLint** son fundamentales para garantizar que el código en React o Angular siga buenas prácticas.
+2. **Pruebas (Testing)**:
+   - En Java, frameworks como **JUnit** y **Mockito** son ideales para pruebas unitarias y de integración.
+   - Para el frontend, frameworks como **Jest**, **Mocha**, o **Cypress** pueden usarse para pruebas unitarias y end-to-end.
+3. **Construcción (Building)**:
+   - En Java, **Maven** o **Gradle** se utilizan comúnmente para compilar y empaquetar la aplicación.
+   - En el caso del frontend, herramientas como **Webpack** o los scripts nativos de React/Angular manejan la construcción y optimización del código.
+
+#### Alternativas a Jenkins y GitHub Actions
+
+Aunque Jenkins y GitHub Actions son opciones muy populares, también podrías considerar:
+- **GitLab CI/CD**: Integración nativa para proyectos alojados en GitLab.
+- **CircleCI**: Compatible con pipelines complejos y despliegues en Docker.
+- **Render**: Además de ser una herramienta de despliegue, Render puede integrarse para procesos CI/CD, simplificando el flujo.
+- **Travis CI**: Fácil de usar y compatible con múltiples lenguajes.
+
+#### ¿Entorno autohospedado o basado en la nube?
+
+Elegir entre un entorno autohospedado o basado en la nube depende de las necesidades del proyecto:
+- **Autohospedado**: Ideal si el equipo necesita un control total sobre la infraestructura y tiene recursos para gestionar servidores CI. Es útil en entornos corporativos con estrictos requisitos de seguridad.
+- **Basado en la nube**: En un equipo pequeño y con herramientas como Render, GitHub Actions, o CircleCI, esta opción es más eficiente y económica. Además, facilita la escalabilidad sin preocuparse por la infraestructura.
+
+Dado el tamaño del equipo y el uso de GitHub como repositorio, combinar GitHub Actions para CI con Render como herramienta de despliegue sería una solución simple y efectiva para garantizar que la aplicación llegue al entorno de producción de manera confiable.
+
