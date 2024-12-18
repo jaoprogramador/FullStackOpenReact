@@ -1,6 +1,7 @@
 Vamos a Crear una aplicación nativa con un routing, formulario de formik
 validaciones simples, aplicar estilos
 
+npx expo start
 npm start 
 expo start --web
 npm start --clear
