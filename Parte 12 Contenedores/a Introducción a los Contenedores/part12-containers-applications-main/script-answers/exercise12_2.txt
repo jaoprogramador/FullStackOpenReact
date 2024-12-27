@@ -1,0 +1,51 @@
+# Comando ejecutado:
+docker run -it ubuntu bash
+
+# Resultado:
+root@<container_id>:~#
+
+
+# Comando ejecutado:
+docker pull ubuntu
+
+# Resultado:
+Using default tag: latest
+latest: Pulling from library/ubuntu
+Digest: sha256:...
+
+# Comando ejecutado:
+docker run -it ubuntu bash
+
+# Resultado:
+root@<container_id>:~#
+
+# Comando ejecutado:
+mkdir -p /usr/src/app
+
+# Resultado:
+(no output)
+
+# Comando ejecutado:
+echo 'console.log("Hello from inside the container!");' > /usr/src/app/index.js
+
+# Resultado:
+(no output)
+
+# Comando ejecutado:
+cat /usr/src/app/index.js
+
+# Resultado:
+console.log("Hello from inside the container!");
+
+# Comando ejecutado:
+exit
+
+# Resultado:
+(exit container)
+
+# para ver lo que tiene el contenedor
+docker container ls -a
+# para arrancar un contenedor 
+docker start -i thirsty_curran
+para matar un contenedor
+ docker kill thirsty_curran
