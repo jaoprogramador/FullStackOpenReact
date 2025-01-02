@@ -1,0 +1,63 @@
+docker run -it ubuntu bash
+root@c2655222ead0:/# cd /usr/src/app
+bash: cd: /usr/src/app: No such file or directory
+root@c2655222ead0:/# ls
+bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@c2655222ead0:/# cd usr/src/app
+bash: cd: usr/src/app: No such file or directory
+root@c2655222ead0:/# cd usr/src/
+root@c2655222ead0:/usr/src# ls
+root@c2655222ead0:/usr/src# cd ..
+root@c2655222ead0:/usr# cd ..
+root@c2655222ead0:/# mkdir -p /usr/src/app
+root@c2655222ead0:/# cd usr/src/app/
+root@c2655222ead0:/usr/src/app# ls
+root@c2655222ead0:/usr/src/app# apt update
+Get:1 http://archive.ubuntu.com/ubuntu noble InRelease [256 kB]
+Get:2 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Get:3 http://archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+Get:4 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [707 kB]
+Get:5 http://archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Get:6 http://archive.ubuntu.com/ubuntu noble/restricted amd64 Packages [117 kB]
+Get:7 http://archive.ubuntu.com/ubuntu noble/universe amd64 Packages [19.3 MB]
+Get:8 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1028 kB]
+Get:9 http://security.ubuntu.com/ubuntu noble-security/main amd64 Packages [719 kB]
+Get:10 http://security.ubuntu.com/ubuntu noble-security/multiverse amd64 Packages [15.3 kB]
+Get:11 http://archive.ubuntu.com/ubuntu noble/main amd64 Packages [1808 kB]
+Get:12 http://archive.ubuntu.com/ubuntu noble/multiverse amd64 Packages [331 kB]
+Get:13 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [968 kB]
+Get:14 http://archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [724 kB]
+Get:15 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1254 kB]
+Get:16 http://archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [19.7 kB]
+Get:17 http://archive.ubuntu.com/ubuntu noble-backports/universe amd64 Packages [11.9 kB]
+Fetched 27.7 MB in 11s (2598 kB/s)
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+All packages are up to date.
+root@c2655222ead0:/usr/src/app# apt install -y nano
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+Suggested packages:
+  hunspell
+The following NEW packages will be installed:
+  nano
+0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+Need to get 282 kB of archives.
+After this operation, 856 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 nano amd64 7.2-2ubuntu0.1 [282 kB]
+Fetched 282 kB in 1s (257 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package nano.
+(Reading database ... 4379 files and directories currently installed.)
+Preparing to unpack .../nano_7.2-2ubuntu0.1_amd64.deb ...
+Unpacking nano (7.2-2ubuntu0.1) ...
+Setting up nano (7.2-2ubuntu0.1) ...
+update-alternatives: using /bin/nano to provide /usr/bin/editor (editor) in auto mode
+update-alternatives: warning: skip creation of /usr/share/man/man1/editor.1.gz because associated file /usr/share/man/man1/nano.1.gz (of link group editor) doesn't exist
+update-alternatives: using /bin/nano to provide /usr/bin/pico (pico) in auto mode
+update-alternatives: warning: skip creation of /usr/share/man/man1/pico.1.gz because associated file /usr/share/man/man1/nano.1.gz (of link group pico) doesn't exist
+root@c2655222ead0:/usr/src/app# nano index.js
+root@c2655222ead0:/usr/src/app# cat index.js
+console.log('HELLO _JAO');

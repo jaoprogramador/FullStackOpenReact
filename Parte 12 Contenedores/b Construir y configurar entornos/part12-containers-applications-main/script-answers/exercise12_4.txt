@@ -377,3 +377,38 @@ presenting a list of cities, representing the time zones in which they are locat
   2. America  4. Arctic      6. Atlantic  8. Europe     10. Pacific
 Geographic area:
 Progress: [ 71%] [######################################################################............................]
+Geographic area: 8
+
+Please select the city or region corresponding to your time zone.
+
+  1. Amsterdam   10. Bucharest   19. Isle_of_Man  28. Luxembourg  37. Paris       46. Simferopol  55. Vatican
+  2. Andorra     11. Budapest    20. Istanbul     29. Madrid      38. Podgorica   47. Skopje      56. Vienna
+  3. Astrakhan   12. Busingen    21. Jersey       30. Malta       39. Prague      48. Sofia       57. Vilnius
+  4. Athens      13. Chisinau    22. Kaliningrad  31. Mariehamn   40. Riga        49. Stockholm   58. Volgograd
+  5. Belfast     14. Copenhagen  23. Kirov        32. Minsk       41. Rome        50. Tallinn     59. Warsaw
+  6. Belgrade    15. Dublin      24. Kyiv         33. Monaco      42. Samara      51. Tirane      60. Zagreb
+  7. Berlin      16. Gibraltar   25. Lisbon       34. Moscow      43. San_Marino  52. Tiraspol    61. Zurich
+  8. Bratislava  17. Guernsey    26. Ljubljana    35. Nicosia     44. Sarajevo    53. Ulyanovsk
+  9. Brussels    18. Helsinki    27. London       36. Oslo        45. Saratov     54. Vaduz
+Time zone: 29
+
+
+Current default time zone: 'Europe/Madrid'
+Local time is now:      Fri Dec 27 12:24:53 CET 2024.
+Universal Time is now:  Fri Dec 27 11:24:53 UTC 2024.
+Run 'dpkg-reconfigure tzdata' if you wish to change it.
+
+Setting up netbase (6.4) ...
+Setting up libpython3.12-stdlib:amd64 (3.12.3-1ubuntu0.3) ...
+Setting up python3.12 (3.12.3-1ubuntu0.3) ...
+Setting up libpython3-stdlib:amd64 (3.12.3-0ubuntu2) ...
+Setting up python3 (3.12.3-0ubuntu2) ...
+running python rtupdate hooks for python3.12...
+running python post-rtupdate hooks for python3.12...
+Setting up nodejs (20.18.1-1nodesource1) ...
+Processing triggers for libc-bin (2.39-0ubuntu8.3) ...
+root@c2655222ead0:/usr/src/app#
+
+cd /usr/src/app
+root@c2655222ead0:/usr/src/app# node index.js
+HELLO _JAO

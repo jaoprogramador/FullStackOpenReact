@@ -1,0 +1,150 @@
+# services:
+#  app:
+#    image: hello-front-dev
+#    build:
+#      context: . # El contexto tomará este directorio como el "contexto del build"
+#      dockerfile: dev.Dockerfile # Esto simplemente le indicará qué dockerfile leer
+#    volumes:
+#      - ./:/usr/src/app # La ruta puede ser relativa, por lo que ./ es suficiente para decir "la misma ubicación que el docker-compose.yml"
+#    ports:
+#      - 5173:5173
+#    container_name: hello-front-dev # Esto nombrará el contenedor como hello-front-dev
+#  debug-helper:
+#    image: busybox
+
+# OPCION 2
+#version: "3.9"
+
+#services:
+#  frontend:
+#    image: node:20 # Imagen base para desarrollo
+#    working_dir: /usr/src/app
+#    volumes:
+#      - .:/usr/src/app  # Monta el código fuente local en el contenedor
+#      - /usr/src/app/node_modules # Evita conflictos de permisos en node_modules
+#    ports:
+#      - "3000:5173" # Puerto por defecto para Vite
+#    command: sh -c "npm install && npm run dev" # Instala dependencias y arranca el servidor de desarrollo
+#    environment:
+#      - VITE_BACKEND_URL=http://localhost:3001 # Configura la URL del backend
+
+
+#OPCION 3: Ejercicio 12.16
+#version: "3.9"
+
+#services:
+#  nginx:
+#    image: nginx:latest
+#    ports:
+#      - "80:80"
+#    volumes:
+#      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
+#    depends_on:
+#      - todo-frontend
+#      - todo-backend
+
+#  todo-frontend:
+#    build:
+#      context: ./todo-frontend
+#      dockerfile: dev.Dockerfile
+#    ports:
+#      - "3000:3000" # Expuesto solo para desarrollo (opcional)
+#    environment:
+#      - VITE_BACKEND_URL=http://localhost/api # Backend desde el punto de vista del frontend
+
+#  todo-backend:
+#    build:
+#      context: ./todo-backend
+#      dockerfile: dev.Dockerfile
+#    ports:
+#      - "3001:3001" # Expuesto solo para desarrollo (opcional)
+#    environment:
+#      - REDIS_URL=redis://redis:6379
+#      - MONGO_URL=mongodb://mongo:27017/todoapp
+#    depends_on:
+#      - mongo
+#      - redis
+
+#  mongo:
+#    image: mongo:6
+#    ports:
+#      - "27017:27017"
+#    volumes:
+#      - mongo-data:/data/db
+
+#  redis:
+#    image: redis:7
+#    ports:
+#      - "6379:6379"
+#    volumes:
+#      - redis-data:/data
+
+#volumes:
+#  mongo-data:
+#  redis-data:
+services:
+  # Frontend service
+  frontend:
+    build:
+      context: ./todo-frontend
+      dockerfile: dev.Dockerfile
+    container_name: my-app-frontend
+    volumes:
+      - ./todo-frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - VITE_BACKEND_URL=http://nginx/api # Nginx es quien maneja las solicitudes hacia el backend
+    # No se expone el puerto directamente, se accede a través de Nginx
+
+  # Backend service
+  backend:
+    build:
+      context: ./todo-backend
+      dockerfile: dev.Dockerfile
+    container_name: my-app-backend
+    volumes:
+      - ./todo-backend:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - MONGO_URL=mongodb://mongo:27017/todoapp
+    depends_on:
+      - mongo
+      - redis
+    # No se expone el puerto directamente, se accede a través de Nginx
+
+  # Nginx service
+  nginx:
+    image: nginx:1.20.1
+    container_name: my-app-nginx
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80 # Este puerto es el que se expondrá al exterior para acceder a la aplicación
+    depends_on:
+      - frontend
+      - backend
+
+  # MongoDB service
+  mongo:
+    image: mongo:6
+    container_name: my-app-mongo
+    volumes:
+      - mongo-data:/data/db
+    # Mongo no necesita que se exponga el puerto, ya que backend accede a él internamente
+
+  # Redis service
+  redis:
+    image: redis:7
+    container_name: my-app-redis
+    volumes:
+      - redis-data:/data
+    # Redis tampoco necesita puertos expuestos
+
+# Volúmenes persistentes para Mongo y Redis
+volumes:
+  mongo-data:
+  redis-data:
+
+
+

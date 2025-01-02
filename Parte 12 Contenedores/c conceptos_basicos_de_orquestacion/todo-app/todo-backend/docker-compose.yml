@@ -1,0 +1,76 @@
+#version: '3.8'
+#services:
+#  backend:
+#    build:
+#      context: .
+#    ports:
+#      - "3000:3000"
+#    container_name: todo-backend-container
+
+#version: '3.8'
+
+#services:
+ # backend:
+#   build:
+#      context: .
+#    ports:
+#      - "3000:3000"
+#    container_name: todo-backend-container
+#    environment:
+#      - MONGO_URL=mongodb://root:example@mongodb:27017/the_database # Asegúrate de usar el nombre del servicio como host
+#      - REDIS_URL=redis://redis:6379 # Uso del nombre del servicio de Redis
+#   depends_on:
+#      - mongodb
+#      - redis
+#    networks:
+#      - app-network
+
+#  mongodb:
+#    image: mongo:latest
+#    container_name: mongodb
+#    ports:
+#      - "27017:27017"
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: root
+#      MONGO_INITDB_ROOT_PASSWORD: example
+#    volumes:
+#      - ./mongo_data:/data/db
+#    networks:
+#      - app-network
+
+#  redis:
+#    image: redis:latest
+#    container_name: redis
+#    ports:
+#      - "6379:6379"
+#    networks:
+#      - app-network
+
+#networks:
+#  app-network:
+#    driver: bridge
+services:
+  mongo:
+    image: initialized-mongo
+    ports:
+      - "27017:27017"
+      #- 3456:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: the_database
+    volumes: 
+      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      - mongo_data:/data/db  # Volumen para la persistencia de MongoDB
+  
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data  # Volumen persistente para Redis
+  
+volumes:
+  mongo_data: {}  # Volumen de MongoDB (sin parámetros adicionales)
+  redis_data: {}  

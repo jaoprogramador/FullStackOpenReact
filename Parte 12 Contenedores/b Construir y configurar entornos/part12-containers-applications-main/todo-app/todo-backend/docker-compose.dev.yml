@@ -1,0 +1,28 @@
+services:
+  mongo:
+    image: initialized-mongo
+    ports:
+      - "27017:27017"
+      #- 3456:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: the_database
+    volumes: 
+      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      - mongo_data:/data/db  # Volumen para la persistencia de MongoDB
+  
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data  # Volumen persistente para Redis
+  
+volumes:
+  mongo_data: {}  # Volumen de MongoDB (definido correctamente)
+  redis_data: {}  # Volumen de Redis (definido correctamente)
+
+
+
