@@ -1,0 +1,13 @@
+{
+  "development": {
+    "username": "dbnotes_f0ty_user",
+    "password": "hf589n86M3m61m1zn9uh67k8StqHA4P0",
+    "database": "dbnotes_f0ty",
+    "host": "dpg-ctr7da52ng1s73esbu20-a.frankfurt-postgres.render.com",
+    "dialect": "postgres",
+    "port": 5432
+  },
+  "production": {
+    "use_env_variable": "DATABASE_URL"
+  }
+}
