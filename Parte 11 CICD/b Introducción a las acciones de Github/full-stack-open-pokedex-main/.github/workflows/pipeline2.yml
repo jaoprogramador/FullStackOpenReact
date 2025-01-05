@@ -1,4 +1,4 @@
-name: Deployment pipeline
+name: Deployment pipeline II
 
 on:
   push:
@@ -11,9 +11,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-         with:
+        with:
           node-version: '20'
       - name: Install dependencies
-         run: npm install  
+        run: npm install
       - name: Check style
         run: npm run eslint
+      - name: Run Playwright tests
+        run: npm run test:e2e
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v5
+        with:
+          command: npm run test:e2e
+          start: npm run start-prod
+          wait-on: http://localhost:5000 
