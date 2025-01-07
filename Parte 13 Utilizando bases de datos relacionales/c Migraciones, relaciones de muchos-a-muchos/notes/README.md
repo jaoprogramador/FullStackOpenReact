@@ -203,3 +203,32 @@ instalar umzug
 
 ejecutar migracion
     npm run migration:down
+
+Ejercicio 13.17.
+Eliminar todas las tablas de la base de datos
+
+    npx sequelize-cli db:migrate:undo:all
+
+--Ejercicio 13.17.
+-- Elimine todas las tablas de la base de datos de su aplicación
+DROP TABLE IF EXISTS notes, users, "SequelizeMeta" CASCADE;
+
+npx sequelize-cli db:migrate --env production
+
+Ejercicio 13.18.
+
+npx sequelize-cli migration:generate --name add-year-to-blogs
+
+npx sequelize-cli db:migrate
+--Ejercicio 13.19
+npx sequelize-cli migration:generate --name create-reading-list
+crea la tabla en 20250105151043-create-reading-list.js
+npx sequelize-cli db:migrate
+
+Ejercicio 13.20
+
+Ejercicio 13.21.
+
+Ejercicio 13.22.
+Ejercicio 13.23
+Ejercicio 13.24.

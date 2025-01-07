@@ -2,9 +2,9 @@ const Note = require('./note')
 const Blog = require('./blog')
 const User = require('./user')
 
-/* Note.sync()
+Note.sync()
 Blog.sync()
-User.sync() */
+User.sync()
 User.hasMany(Note)
 Note.belongsTo(User)
 

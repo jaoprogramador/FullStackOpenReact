@@ -34,7 +34,7 @@ Blog.init(
     modelName: 'blog',
   }
 );
-Blog.belongsTo(User, { foreignKey: 'userId' });
-User.hasMany(Blog, { foreignKey: 'userId' });
+Blog.belongsTo(User, { foreignKey: 'id' });
+User.hasMany(Blog, { foreignKey: 'id' });
 
 module.exports = Blog;
